@@ -1,7 +1,24 @@
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
-import 'firebase/compat/firestore';
+import { initializeApp } from "firebase/app"
+import {
+    GoogleAuthProvider,
+    getAuth,
+    signInWithPopup,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    sendPasswordResetEmail,
+    signOut,
+  } from "firebase/auth";
+  import {
+    getFirestore,
+    query,
+    getDocs,
+    collection,
+    where,
+    addDoc,
+  } from "firebase/firestore";
 import { useAuthState } from './hooks';
+
+
 
 const firebaseConfig = {
     apiKey: "AIzaSyCR67Wmr9XabnSzTF15zJVP1_QuGDrw7RM",
@@ -12,15 +29,16 @@ const firebaseConfig = {
     appId: "1:83805063915:web:4f612472083ea2cc150cae",
     measurementId: "G-6JWQ963TD7"
   };
-  
-  const app = firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth()
-  const db = firebase.firestore()
+
+const firebaseApp = initializeApp(firebaseConfig);
+const auth = getAuth(firebaseApp)
+const db = getFirestore(firebaseApp);
+
   
 
 const logInWithEmailAndPassword = async (email, password) => {
     try {
-      await auth.signInWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(auth, email, password);
     } catch (err) {
       console.error(err);
       alert(err.message);
@@ -29,9 +47,10 @@ const logInWithEmailAndPassword = async (email, password) => {
 
   const registerWithEmailAndPassword = async (name, email, password) => {
     try {
-      const res = await auth.createUserWithEmailAndPassword(auth, email, password);
+      const res = await createUserWithEmailAndPassword(auth, email, password);
+      console.log('res', res)
       const user = res.user;
-      await db.addDoc(db.collection(db, "users"), {
+      await addDoc(collection(db, "users"), {
         uid: user.uid,
         name,
         authProvider: "local",
@@ -43,25 +62,9 @@ const logInWithEmailAndPassword = async (email, password) => {
     }
   };
 
-//   const registerWithEmailAndPassword = async (name, email, password) => {
-//     try {
-//       const res = await createUserWithEmailAndPassword(auth, email, password);
-//       const user = res.user;
-//       await addDoc(collection(db, "users"), {
-//         uid: user.uid,
-//         name,
-//         authProvider: "local",
-//         email,
-//       });
-//     } catch (err) {
-//       console.error(err);
-//       alert(err.message);
-//     }
-//   };
-
   const sendPasswordReset = async (email) => {
     try {
-      await auth.sendPasswordResetEmail(auth, email);
+      await sendPasswordResetEmail(auth, email);
       alert("Password reset link sent!");
     } catch (err) {
       console.error(err);
@@ -71,20 +74,22 @@ const logInWithEmailAndPassword = async (email, password) => {
 
   const signInWithGoogle = async () => {
     // Retrieve Google provider object
-    const provider = new firebase.auth.GoogleAuthProvider();
+    const provider = new auth.GoogleAuthProvider();
     // Set language to the default browser preference
-    firebase.auth().useDeviceLanguage();
+    auth.useDeviceLanguage();
     // Start sign in process
     try {
-      await firebase.auth().signInWithPopup(provider);
+      await signInWithPopup(provider);
     } catch (error) {
       console.log(error.message);
     }
   };
 
-  const signOut = async () => {
+  const logOut = async () => {
     try {
-      await firebase.auth().signOut();
+      await signOut(auth).then(()=>{
+          console.log('sign out')
+      });
     } catch (error) {
       console.log(error.message);
     }
@@ -97,5 +102,5 @@ export {
     logInWithEmailAndPassword,
     registerWithEmailAndPassword,
     sendPasswordReset,
-    signOut
+    logOut
 };
