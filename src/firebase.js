@@ -1,4 +1,5 @@
-import { initializeApp } from "firebase/app"
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
 import {
     GoogleAuthProvider,
     getAuth,
@@ -31,7 +32,11 @@ const firebaseConfig = {
   };
 
 const firebaseApp = initializeApp(firebaseConfig);
-const auth = getAuth(firebaseApp)
+const analytics = getAnalytics(firebaseApp);
+const auth = getAuth(firebaseApp);
+console.log('AUTH', auth)
+console.log('AUTHUSER', auth.currentUser)
+
 const db = getFirestore(firebaseApp);
 
   
@@ -87,6 +92,7 @@ const logInWithEmailAndPassword = async (email, password) => {
 
   const logOut = async () => {
     try {
+        auth.currentUser  &&
       await signOut(auth).then(()=>{
           console.log('sign out')
       });
