@@ -2,14 +2,24 @@ import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import { auth, db, logOut } from "../firebase";
-import { query, collection, getDocs, where } from "firebase/firestore";
-import Channel from "./Channel"
+import { query, collection, getDocs, where, orderBy } from "firebase/firestore";
+import { useCollectionData} from "react-firebase-hooks/firestore";
+import Channel from "./Chat"
+import NavBar from "./NavBar"
+import { MainWrapper } from "../components/wrappers"
+import UserList from "./UserList"
 
 function Dashboard() {
   const [user, loading, error] = useAuthState(auth);
-  console.log('dashboard user', user)
   const [name, setName] = useState("");
+
+  const usersRef = collection(db, 'users');
+  const usersQuery = query(usersRef, orderBy("name"));
+  const [users] = useCollectionData(usersQuery);
+  console.log("users", users)
   const navigate = useNavigate();
+
+
   const fetchUserName = async () => {
     try {
       const q = query(collection(db, "users"), where("uid", "==", user?.uid));
@@ -27,18 +37,13 @@ function Dashboard() {
     if (!user) return navigate("/");
     fetchUserName();
   }, [user, loading]);
+
   return (
-    <div className="dashboard">
-       <div className="dashboard__container">
-        Logged in as
-         <div>{name}</div>
-         <div>{user?.email}</div>
-         <button className="dashboard__btn" onClick={logOut}>
-          Logout
-         </button>
-         <Channel user={user} db={db} collection={collection} />
-       </div>
-     </div>
+    <MainWrapper>
+      <NavBar name={name}/>
+      <UserList user={user} users={users} db={db} loading={loading} navigate={navigate} />
+      <Channel user={user} users={users} db={db} loading={loading} navigate={navigate} />
+     </MainWrapper>
   );
 }
 export default Dashboard;
