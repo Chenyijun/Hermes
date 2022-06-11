@@ -1,7 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import {
-    GoogleAuthProvider,
     getAuth,
     signInWithPopup,
     signInWithEmailAndPassword,
@@ -11,15 +10,9 @@ import {
   } from "firebase/auth";
   import {
     getFirestore,
-    query,
-    getDocs,
     collection,
-    where,
     addDoc,
   } from "firebase/firestore";
-import { useAuthState } from './hooks';
-
-
 
 const firebaseConfig = {
     apiKey: "AIzaSyCR67Wmr9XabnSzTF15zJVP1_QuGDrw7RM",

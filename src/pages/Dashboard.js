@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
-import { auth, db, logOut } from "../firebase";
+import { auth, db } from "../firebase";
 import { query, collection, getDocs, where, orderBy } from "firebase/firestore";
 import { useCollectionData} from "react-firebase-hooks/firestore";
 import Channel from "./Chat"
