@@ -16,7 +16,6 @@ function Dashboard() {
   const usersRef = collection(db, 'users');
   const usersQuery = query(usersRef, orderBy("name"));
   const [users] = useCollectionData(usersQuery);
-  console.log("users", users)
   const navigate = useNavigate();
 
 
@@ -41,8 +40,8 @@ function Dashboard() {
   return (
     <MainWrapper>
       <NavBar name={name}/>
-      <UserList user={user} users={users} db={db} loading={loading} navigate={navigate} />
-      <Channel user={user} users={users} db={db} loading={loading} navigate={navigate} />
+      <UserList user={user} users={users} db={db} />
+      <Channel user={user} users={users} db={db} />
      </MainWrapper>
   );
 }

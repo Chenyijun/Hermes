@@ -1,5 +1,4 @@
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import {
     getAuth,
     signInWithPopup,
@@ -25,11 +24,7 @@ const firebaseConfig = {
   };
 
 const firebaseApp = initializeApp(firebaseConfig);
-const analytics = getAnalytics(firebaseApp);
 const auth = getAuth(firebaseApp);
-console.log('AUTH', auth)
-console.log('AUTHUSER', auth.currentUser)
-
 const db = getFirestore(firebaseApp);
 
   

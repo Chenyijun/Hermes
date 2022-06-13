@@ -6,12 +6,7 @@ import {ChatWrapper} from '../components/wrappers'
 import Message from "./Message"
 
 
-const Channel = ({ user, db, loading, users, navigate }) => {
-
-    useEffect(() => {
-        if (loading) return;
-        if (!user) return navigate("/");
-      }, [user, loading]);
+const Channel = ({ user, db, users}) => {
 
     const messageCollection = collection(db, 'messages'); //ref
     const messageQuery = query(messageCollection, orderBy("createdAt"));
@@ -36,12 +31,12 @@ const Channel = ({ user, db, loading, users, navigate }) => {
     return (
       <ChatWrapper>
         {user && messages && messages.map(message => {
-          const sender = message && users.find(user => {
-            return user.uid == message.uid
+          const sender = message && users && users.find(user => {
+            return user.uid === message.uid
           })
           const sending = message.uid === user.uid
           return (
-            <Message key={message.id} sender={sender && sender.name} text={message.text} sending={sending}/>
+            <Message key={message.id} sender={sender} text={message.text} message={message} sending={sending}/>
           )})}
         <form onSubmit={sendMessage}>
         <input value={formValue} onChange={(e) => setFormValue(e.target.value)} />
