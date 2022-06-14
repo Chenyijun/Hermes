@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import {addDoc, query, orderBy, collection, serverTimestamp, Timestamp } from "firebase/firestore";
-import { useCollectionData } from "react-firebase-hooks/firestore";
+import {addDoc, serverTimestamp, Timestamp } from "firebase/firestore";
 import { auth } from "../firebase";
 import {ChatWrapper} from '../components/wrappers'
 import Message from "./Message"

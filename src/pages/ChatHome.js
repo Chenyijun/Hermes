@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
-import { auth, db } from "../firebase";
+import { auth, db, getUser } from "../firebase";
 import { query, collection, getDocs, where, orderBy, serverTimestamp } from "firebase/firestore";
 import { useCollectionData} from "react-firebase-hooks/firestore";
 import Chat from "./Chat"
@@ -15,6 +15,7 @@ function ChatHome() {
   const [user, loading ] = useAuthState(auth);
   const [name, setName] = useState("");
   const [timeDelay, setTimeDelay] = useState(true)
+  const [selectedRecipient, setSelectedRecipient] = useState(null)
 
   const usersRef = collection(db, 'users');
   const usersQuery = query(usersRef, orderBy("name"));
@@ -24,6 +25,8 @@ function ChatHome() {
   const messageCollection = collection(db, 'messages'); //ref
   const messageQuery = query(messageCollection, orderBy("createdAt"));
   const [messages] = useCollectionData(messageQuery);
+
+  console.log('CHAT USER', getUser())
 
   const toggleTimeDelay = () => {
     setTimeDelay(!timeDelay)
@@ -51,8 +54,8 @@ function ChatHome() {
 
   return (
     <MainWrapper>
-      <NavBar name={name}/>
-      <UserList user={user} users={users} db={db} />
+      <NavBar user={user} />
+      <UserList user={user} users={users} db={db} selectedRecipient={selectedRecipient} setSelectedRecipient={setSelectedRecipient}/>
       <div>
         <ChatHeader>
           Chat with everyone {timeDelay && `[TIME DELAYED]`}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   registerWithEmailAndPassword,
   signInWithGoogle,
@@ -9,11 +9,14 @@ function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const navigate = useNavigate();
+
 
   const register = () => {
     console.log(email)
     if (!name) alert("Please enter name");
     registerWithEmailAndPassword(name, email, password);
+    navigate("/chat");
   };
 
   return (

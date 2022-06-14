@@ -6,11 +6,13 @@ import {
     createUserWithEmailAndPassword,
     sendPasswordResetEmail,
     signOut,
+    updateProfile
   } from "firebase/auth";
   import {
     getFirestore,
     doc,
-    setDoc
+    setDoc,
+    getDoc
   } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
@@ -30,7 +32,16 @@ const db = getFirestore(firebaseApp);
 const storage = getStorage(firebaseApp);
 const currentUser = auth.currentUser
 console.log('CURRent', currentUser)
-  
+
+const getUser = () => {
+  if (auth.currentUser) {
+    getDoc(doc(db, 'users', auth.currentUser.uid)).then ((docSnap) => {
+      if (docSnap.exists) {
+        return docSnap.data()
+      }
+    });
+  }
+}
 
 const logInWithEmailAndPassword = async (email, password) => {
     try {
@@ -46,6 +57,11 @@ const logInWithEmailAndPassword = async (email, password) => {
       const res = await createUserWithEmailAndPassword(auth, email, password);
       const user = res.user;
       const newDocRef = doc(db, "users", user.uid);
+
+      //might cause issues?
+      updateProfile(auth.currentUser, {
+        displayName: name
+      })
 
       await setDoc(newDocRef, {
         uid: user.uid,
@@ -101,6 +117,7 @@ export {
     db,
     storage,
     currentUser,
+    getUser,
     signInWithGoogle,
     logInWithEmailAndPassword,
     registerWithEmailAndPassword,

@@ -7,7 +7,7 @@ const Message = ({ sender, text, sending, message, timeStamp }) => {
 
     return (
       <MessageWrapper key={message && message.id} sending={sending}>
-          {sender && sender.avatar ? 
+          {(sender && sender.avatar) ? 
 				<Avatar small alt='avatar'src={sender && sender.avatar} text={sender&& sender.name} />
 				: <DefaultAvatar small>{sender && sender.name}</DefaultAvatar>}
           <p>{sender && sender.name}</p>

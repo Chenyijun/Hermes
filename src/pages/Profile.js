@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import { Avatar, DefaultAvatar } from '../components/chatComponents'
 import { MainWrapper } from '../components/wrappers'
-import { auth, db, storage, currentUser, getUser } from '../firebase';
+import { auth, db, storage, currentUser } from '../firebase';
 import { ref, getDownloadURL, uploadBytes, deleteObject } from 'firebase/storage'
 import { getDoc, doc, updateDoc} from '@firebase/firestore';
+import { updateProfile } from '@firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import NavBar from './NavBar';
 
@@ -11,15 +12,18 @@ const Profile = () => {
 	const [img, setImg] = useState('')
 	const [user, setUser] = useState(currentUser);
 	const navigate = useNavigate("");
+	
 	useEffect(() => {
-		if (auth.currentUser) {
+			if (auth.currentUser) {
 			getDoc(doc(db, 'users', auth.currentUser.uid)).then ((docSnap) => {
 				if (docSnap.exists) {
 					setUser(docSnap.data());
 					console.log('set user', user);
 				}
 			});
-
+		}
+	}, []);
+	useEffect(() => {
 			if (img){
 				const uploadImg = async () => {
 					const imgRef = ref( storage, `avatar/${new Date().getTime()} - ${img.name}`)
@@ -39,6 +43,10 @@ const Profile = () => {
 							avatarPath: snap.ref.fullPath,
 						});
 
+						updateProfile(auth.currentUser, {
+							photoURL: url
+						})
+
 						setImg("");
 					} catch (err) {
 						console.log(err.message)
@@ -46,7 +54,6 @@ const Profile = () => {
 			}
 			uploadImg();
 		};
-		}
 }, [img]);
 
 const deleteImage = async () => {
@@ -69,9 +76,9 @@ const deleteImage = async () => {
 
 return(
 	<MainWrapper>
-		<NavBar />
+		<NavBar user={user}/>
 		<div>
-			{user && user.avatar ? 
+			{(user && user.avatar) ? 
 				<Avatar alt='avatar'src={user && user.avatar} text={user&& user.name} />
 				: <DefaultAvatar>{user && user.name}</DefaultAvatar>}
 				<input 

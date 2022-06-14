@@ -30,4 +30,5 @@ export const FriendBubble = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border: ${props => props.selected && `2px solid blue`};
 `
