@@ -4,13 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { auth, db } from "../firebase";
 import { query, collection, getDocs, where, orderBy } from "firebase/firestore";
 import { useCollectionData} from "react-firebase-hooks/firestore";
-import Channel from "./Chat"
+import Chat from "./Chat"
 import NavBar from "./NavBar"
 import { MainWrapper } from "../components/wrappers"
 import UserList from "./UserList"
 
-function Dashboard() {
-  const [user, loading, error] = useAuthState(auth);
+function ChatHome() {
+  const [user, loading ] = useAuthState(auth);
   const [name, setName] = useState("");
 
   const usersRef = collection(db, 'users');
@@ -41,8 +41,8 @@ function Dashboard() {
     <MainWrapper>
       <NavBar name={name}/>
       <UserList user={user} users={users} db={db} />
-      <Channel user={user} users={users} db={db} />
+      <Chat user={user} users={users} db={db} />
      </MainWrapper>
   );
 }
-export default Dashboard;
+export default ChatHome;

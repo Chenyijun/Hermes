@@ -1,12 +1,12 @@
-import React, { useEffect, useState, useRef } from "react";
-import {addDoc, query, orderBy, collection, serverTimestamp } from "firebase/firestore";
+import React, { useState, useRef } from "react";
+import {addDoc, query, orderBy, collection, serverTimestamp, Timestamp } from "firebase/firestore";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { auth } from "../firebase";
 import {ChatWrapper} from '../components/wrappers'
 import Message from "./Message"
 
 
-const Channel = ({ user, db, users}) => {
+const Chat = ({ user, db, users}) => {
 
     const messageCollection = collection(db, 'messages'); //ref
     const messageQuery = query(messageCollection, orderBy("createdAt"));
@@ -14,13 +14,16 @@ const Channel = ({ user, db, users}) => {
     const [formValue, setFormValue] = useState('');
     const drop = useRef()
 
+
     const sendMessage = async(e) => {
         e.preventDefault();
         const { uid } = auth.currentUser;
+        const currentTime = Date.now()
 
         await addDoc(messageCollection, {
             text: formValue,
             createdAt: serverTimestamp(),
+            sentAt: new Timestamp(Timestamp.now().seconds + 1200, Timestamp.now().nanoseconds),
             uid
         })
         setFormValue('')
@@ -48,4 +51,4 @@ const Channel = ({ user, db, users}) => {
     );
   };
 
-export default Channel
+export default Chat

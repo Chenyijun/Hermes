@@ -9,9 +9,10 @@ import {
   } from "firebase/auth";
   import {
     getFirestore,
-    collection,
-    addDoc,
+    doc,
+    setDoc
   } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCR67Wmr9XabnSzTF15zJVP1_QuGDrw7RM",
@@ -26,7 +27,9 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 const auth = getAuth(firebaseApp);
 const db = getFirestore(firebaseApp);
-
+const storage = getStorage(firebaseApp);
+const currentUser = auth.currentUser
+console.log('CURRent', currentUser)
   
 
 const logInWithEmailAndPassword = async (email, password) => {
@@ -41,13 +44,16 @@ const logInWithEmailAndPassword = async (email, password) => {
   const registerWithEmailAndPassword = async (name, email, password) => {
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
-      console.log('res', res)
       const user = res.user;
-      await addDoc(collection(db, "users"), {
+      const newDocRef = doc(db, "users", user.uid);
+
+      await setDoc(newDocRef, {
         uid: user.uid,
         name,
         authProvider: "local",
         email,
+        avatar: '',
+        avatarPath: ''
       });
     } catch (err) {
       console.error(err);
@@ -89,9 +95,12 @@ const logInWithEmailAndPassword = async (email, password) => {
     }
   };
 
+
 export {
     auth,
     db,
+    storage,
+    currentUser,
     signInWithGoogle,
     logInWithEmailAndPassword,
     registerWithEmailAndPassword,

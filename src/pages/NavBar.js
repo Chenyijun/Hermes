@@ -7,9 +7,10 @@ function NavBar({name}) {
 
   return (
     <SideNav>
-        <a href="/dashboard">Chat</a>
+        <a href="/chat">Chat</a>
         <a href="/activities">Activities</a>
         <p>{name}</p>
+        <a href="/profile">Profile</a>
         <button onClick={logOut}>
           Logout
          </button>
