@@ -5,7 +5,7 @@ import Login from './pages/Login'
 import ChatHome from './pages/ChatHome'
 import Register from './pages/Register';
 import Reset from './pages/Reset';
-import Activities from './pages/Activities';
+import ActivitiesHome from './pages/ActivitiesHome';
 import Profile from './pages/Profile';
 
 
@@ -18,7 +18,7 @@ function App() {
         <Route exact path="/register" element={<Register />} />
         <Route exact path="/reset" element={<Reset />} />
         <Route exact path="/chat" element={<ChatHome />} />
-        <Route exact path="/activities" element={<Activities />} />
+        <Route exact path="/activities" element={<ActivitiesHome />} />
         <Route exact path="/profile" element={<Profile />} />
         <Route path="*" element={<Login />} />
       </Routes>

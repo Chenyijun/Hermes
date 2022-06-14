@@ -2,7 +2,7 @@ import React from "react";
 import NavBar from "./NavBar"
 import { MainWrapper } from "../components/wrappers"
 
-function Activities() {
+function ActivitiesHome() {
   return (
     <MainWrapper>
     <NavBar />
@@ -12,4 +12,4 @@ function Activities() {
    </MainWrapper>
   );
 }
-export default Activities;
+export default ActivitiesHome;

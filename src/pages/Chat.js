@@ -1,30 +1,37 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {addDoc, query, orderBy, collection, serverTimestamp, Timestamp } from "firebase/firestore";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { auth } from "../firebase";
 import {ChatWrapper} from '../components/wrappers'
 import Message from "./Message"
+import moment from 'moment'
 
 
-const Chat = ({ user, db, users}) => {
+const Chat = ({ user, users, messages, messageCollection, recipientUid, timeDelay}) => {
 
-    const messageCollection = collection(db, 'messages'); //ref
-    const messageQuery = query(messageCollection, orderBy("createdAt"));
-    const [messages] = useCollectionData(messageQuery);
     const [formValue, setFormValue] = useState('');
+    const [date, setDate] = useState(new Date());
     const drop = useRef()
+
+    useEffect(() => {
+      var timer = setInterval(()=> setDate(new Date()), 1000)
+
+      return function cleanup() {
+        clearInterval(timer)
+      }
+    })
 
 
     const sendMessage = async(e) => {
         e.preventDefault();
         const { uid } = auth.currentUser;
-        const currentTime = Date.now()
 
         await addDoc(messageCollection, {
             text: formValue,
             createdAt: serverTimestamp(),
             sentAt: new Timestamp(Timestamp.now().seconds + 1200, Timestamp.now().nanoseconds),
-            uid
+            uid,
+            recipientUid: recipientUid || '',
         })
         setFormValue('')
 
@@ -38,9 +45,16 @@ const Chat = ({ user, db, users}) => {
             return user.uid === message.uid
           })
           const sending = message.uid === user.uid
-          return (
-            <Message key={message.id} sender={sender} text={message.text} message={message} sending={sending}/>
-          )})}
+          if (timeDelay) {
+            if (moment(message.sentAt.toDate()) < moment(date)){
+              return <Message key={message.id} sender={sender} text={message.text} message={message} sending={sending} timeStamp={message.sentAt}/>
+            }
+          } else {
+            return (
+              <Message key={message.id} sender={sender} text={message.text} message={message} sending={sending} timeStamp={message.createdAt}/>
+            )
+          } 
+        })}
         <form onSubmit={sendMessage}>
         <input value={formValue} onChange={(e) => setFormValue(e.target.value)} />
         <button type="submit">Submit</button>

@@ -6,3 +6,10 @@ export const Avatar = styled.img`
     background: 'blue';
     border-radius: 50%;
 `
+
+export const ChatHeader = styled.div`
+    background: #eee;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+`
