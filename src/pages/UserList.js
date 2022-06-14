@@ -1,5 +1,6 @@
 import React from "react";
 import { UserListWrapper } from '../components/wrappers'
+import { Avatar, DefaultAvatar, FriendBubble } from '../components/chatComponents'
 
 const UserList = ({ user, users }) => {
 
@@ -8,12 +9,17 @@ const UserList = ({ user, users }) => {
 	return (
 		<UserListWrapper>
 			Friends List
-			<ul>
 				{user && users && friends.map(friend => {
 				return (
-						<li key={friend.uid}>{friend.name}</li>
+						<button key={friend.uid}>
+							<FriendBubble>
+								{friend && friend.avatar ? 
+									<Avatar small alt='avatar'src={friend && friend.avatar} text={friend&& friend.name} />
+									: <DefaultAvatar small>{friend && friend.name}</DefaultAvatar>}
+								{friend.name}
+							</FriendBubble>
+						</button>
 				)})}
-			</ul>
 		</UserListWrapper>
 	);
   };

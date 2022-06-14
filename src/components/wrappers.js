@@ -10,7 +10,8 @@ export const SideNav = styled.nav`
     width: 100px;
     box-sizing: border-box;
     padding: 1rem;
-    height: 100vh;
+    height: 100%;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
 `
@@ -20,7 +21,8 @@ export const UserListWrapper = styled.div`
     width: 150px;
     box-sizing: border-box;
     padding: 1rem;
-    height: 100vh;
+    height: 100%;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
 `
