@@ -86,8 +86,8 @@ return(
 						accept='image'
 						onChange={(e) => setImg(e.target.files[0])}/>
 				<button onClick={() => deleteImage()}>Delete Image</button>
-				<p>{user && user.name || 'name'}</p>
-				<p>{user && user.email || 'email'}</p>
+				<p>{user?.name || 'name'}</p>
+				<p>{user?.email || 'email'}</p>
 	 </div>
  </MainWrapper>
 	)

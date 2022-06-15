@@ -8,8 +8,6 @@ import { currentUser } from "../firebase";
 
 
 const NavBar = ({user}) =>{
-  console.log('nav user', user)
-  console.log('auth user', currentUser)
 
   return (
     <SideNav>

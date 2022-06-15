@@ -1,7 +1,7 @@
 import React from "react";
-import { MessageWrapper, MessageTextWrapper } from '../components/wrappers'
+import { MessageWrapper, MessageTextWrapper } from './wrappers'
 import moment from 'moment'
-import { Avatar, DefaultAvatar } from '../components/chatComponents'
+import { Avatar, DefaultAvatar } from './chatComponents'
 
 const Message = ({ sender, text, sending, message, timeStamp }) => {
 

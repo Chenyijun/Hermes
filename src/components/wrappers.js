@@ -2,6 +2,11 @@ import styled from 'styled-components'
 
 export const MainWrapper = styled.div`
     display: grid;
+    grid-template-columns: 100px auto;
+`
+
+export const MainChatWrapper = styled.div`
+    display: grid;
     grid-template-columns: 100px 150px auto;
 `
 
@@ -41,4 +46,8 @@ export const MessageTextWrapper = styled.div`
     padding: 1rem;
     background: #eee;
     border-radius: 10px;
+`
+
+export const SimpleWrapper = styled.div`
+    padding: 1rem;
 `

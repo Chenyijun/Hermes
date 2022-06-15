@@ -7,7 +7,7 @@ import Register from './pages/Register';
 import Reset from './pages/Reset';
 import ActivitiesHome from './pages/ActivitiesHome';
 import Profile from './pages/Profile';
-
+import Activity from './pages/Activity';
 
 function App() {
 
@@ -20,6 +20,7 @@ function App() {
         <Route exact path="/chat" element={<ChatHome />} />
         <Route exact path="/activities" element={<ActivitiesHome />} />
         <Route exact path="/profile" element={<Profile />} />
+        <Route path={`/activity/:activityID`} element={<Activity />} />
         <Route path="*" element={<Login />} />
       </Routes>
     </Router>
