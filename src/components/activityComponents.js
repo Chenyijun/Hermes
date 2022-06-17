@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Link } from "react-router-dom";
 
 export const ActivityCardWrapper = styled.div`
   display: flex;
@@ -19,4 +20,16 @@ export const Tag = styled.div`
   color: white;
   border-radius: 45%;
   padding: 5px 20px;
+`
+
+export const CardLink = styled(Link)`
+  text-decoration: none;
+  &:not(:last-child) {
+    margin-right: 1rem;
+  }
+`
+
+export const ActivityFlex = styled.div`
+  display: flex;
+  flex-direction: row;
 `

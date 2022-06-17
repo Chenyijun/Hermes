@@ -6,10 +6,7 @@ const UserList = ({ user, users, setSelectedRecipient, selectedRecipient}) => {
 
 	const friends = user && users && users.filter(friend => friend.uid !== user.uid);
 
-	const toggleRecipient = ({friend}) => {
-		console.log('friend', friend)
-		console.log('selectedRecipient', selectedRecipient)
-
+	const toggleRecipient = (friend) => {
 		setSelectedRecipient(friend === selectedRecipient ? null : friend)
 	}
 

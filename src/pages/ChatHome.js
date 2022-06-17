@@ -25,8 +25,6 @@ function ChatHome() {
   const messageQuery = query(messageCollection, orderBy("createdAt"));
   const [messages] = useCollectionData(messageQuery);
 
-  console.log('CHAT USER', getUser())
-
   const toggleTimeDelay = () => {
     setTimeDelay(!timeDelay)
   }
@@ -55,10 +53,10 @@ function ChatHome() {
       <UserList user={user} users={users} db={db} selectedRecipient={selectedRecipient} setSelectedRecipient={setSelectedRecipient}/>
       <div>
         <ChatHeader>
-          Chat with everyone {timeDelay && `[TIME DELAYED]`}
+          Chat with {selectedRecipient?.name || 'everyone'} {timeDelay && `[TIME DELAYED]`}
           <button onClick={() => toggleTimeDelay()}>{timeDelay ? 'Turn off time delay' : 'Turn on time delay'}</button>
         </ChatHeader>
-        <Chat user={user} users={users} db={db} messages={messages} messageCollection={messageCollection} timeDelay={timeDelay}/>
+        <Chat user={user} users={users} db={db} messages={messages} messageCollection={messageCollection} timeDelay={timeDelay} friend={selectedRecipient} />
       </div>
      </MainChatWrapper>
   );

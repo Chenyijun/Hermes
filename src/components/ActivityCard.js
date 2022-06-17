@@ -1,17 +1,16 @@
 import React from "react";
-import { ActivityCardWrapper, Tag } from './activityComponents'
-import { Link } from "react-router-dom";
+import { ActivityCardWrapper, Tag, CardLink } from './activityComponents'
 
 
 const ActivityCard = ({ activity }) => {
     return (
-      <Link to={`/activity/${activity.id}`} key={activity.id}> 
+      <CardLink to={`/activity/${activity.id}`} key={activity.id}> 
         <ActivityCardWrapper>
-          {activity.title || 'activity title'}
-          {activity.description || 'activity description'}
+          <p><b>{activity.title || 'activity title'}</b></p>
+          <p>{activity.description || 'activity description'}</p>
           {activity.tags.map(tag => <Tag>{tag}</Tag>)}
       </ActivityCardWrapper>
-      </Link>
+      </CardLink>
     );
   };
 
