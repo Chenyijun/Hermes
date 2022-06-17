@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { Avatar, DefaultAvatar } from '../components/chatComponents'
 import { MainWrapper } from '../components/wrappers'
-import { auth, db, storage, currentUser} from '../firebase';
+import { auth, db, storage } from '../firebase';
 import { ref, getDownloadURL, uploadBytes, deleteObject } from 'firebase/storage'
 import { getDoc, doc, updateDoc} from '@firebase/firestore';
 import { updateProfile, onAuthStateChanged } from '@firebase/auth';
@@ -10,7 +10,7 @@ import NavBar from './NavBar';
 
 const Profile = () => {
 	const [img, setImg] = useState('')
-	const [user, setUser] = useState(currentUser);
+	const [user, setUser] = useState(null);
 	const [isLoading, setIsLoading] = useState(false);
 	const navigate = useNavigate("");
 	console.log('user', user)

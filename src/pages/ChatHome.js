@@ -16,7 +16,7 @@ import UserList from "./UserList"
 function ChatHome() {
   const [authUser, loading ] = useAuthState(auth);
   const [timeDelay, setTimeDelay] = useState(true)
-  const [selectedRecipient, setSelectedRecipient] = useState(null)
+  const [selectedFriend, setSelectedFriend] = useState(null)
   const [user, setUser] = useState(null)
 
   const usersRef = collection(db, 'users');
@@ -42,7 +42,6 @@ function ChatHome() {
 			getDoc(doc(db, 'users', currentUser.uid)).then ((docSnap) => {
 				if (docSnap.exists) {
 					setUser(docSnap.data());
-					console.log('set user', user);
 				}
 			});
 		})
@@ -51,13 +50,13 @@ function ChatHome() {
   return (
     <MainFriendsListWrapper>
       <NavBar user={user} />
-      <UserList user={authUser} users={users} db={db} selectedRecipient={selectedRecipient} setSelectedRecipient={setSelectedRecipient}/>
+      <UserList user={authUser} users={users} db={db} selectedFriend={selectedFriend} setSelectedFriend={setSelectedFriend}/>
       <div>
         <ChatHeader>
-          Chat with {selectedRecipient?.name || 'everyone'} {timeDelay && `[TIME DELAYED]`}
+          Chat with {selectedFriend?.name || 'everyone'} {timeDelay && `[TIME DELAYED]`}
           <button onClick={() => toggleTimeDelay()}>{timeDelay ? 'Turn off time delay' : 'Turn on time delay'}</button>
         </ChatHeader>
-        <Chat user={authUser} users={users} db={db} messages={messages} messageCollection={messageCollection} timeDelay={timeDelay} friend={selectedRecipient} />
+        <Chat user={authUser} users={users} db={db} messages={messages} messageCollection={messageCollection} timeDelay={timeDelay} friend={selectedFriend} />
       </div>
      </MainFriendsListWrapper>
   );

@@ -16,7 +16,7 @@ function ActivitiesHome() {
   const [activities, setActivities] = useState([])
   const [authUser, loading ] = useAuthState(auth);
   const [user, setUser] = useState(null);
-  const [selectedRecipient, setSelectedRecipient] = useState(null)
+  const [selectedFriend, setSelectedFriend] = useState(null)
 
   const usersRef = collection(db, 'users');
   const usersQuery = query(usersRef, orderBy("name"));
@@ -47,15 +47,21 @@ function ActivitiesHome() {
 
   return (
     <MainFriendsListWrapper>
-    <NavBar user={user}/>
-    <UserList user={authUser} users={users} db={db} selectedRecipient={selectedRecipient} setSelectedRecipient={setSelectedRecipient}/>
-     <SimpleWrapper>
-        <h1>Activities Page</h1>
-        <h2>Available Activities</h2>
-        <ActivityFlex>
-          {activities.map(activity => ( <ActivityCard key={activity.id} activity={activity.data} />))}
-        </ActivityFlex>
-      </SimpleWrapper>
+      <NavBar user={user}/>
+      <UserList user={authUser} users={users} db={db} selectedFriend={selectedFriend} setSelectedFriend={setSelectedFriend}/>
+      <SimpleWrapper>
+        {selectedFriend ? (
+          <h1>{selectedFriend.name}</h1>
+        )
+      : ( <>
+            <h1>Activities Page</h1>
+            <h2>Available Activities</h2>
+            <ActivityFlex>
+              {activities.map(activity => ( <ActivityCard key={activity.id} activity={activity.data} />))}
+            </ActivityFlex>
+          </>
+      )}
+        </SimpleWrapper>
     </MainFriendsListWrapper>
     );
   }

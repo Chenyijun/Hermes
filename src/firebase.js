@@ -30,8 +30,6 @@ const firebaseApp = initializeApp(firebaseConfig);
 const auth = getAuth(firebaseApp);
 const db = getFirestore(firebaseApp);
 const storage = getStorage(firebaseApp);
-const currentUser = auth.currentUser
-console.log('CURRent', currentUser)
 
 const getUser = () => {
   if (auth.currentUser) {
@@ -116,7 +114,6 @@ export {
     auth,
     db,
     storage,
-    currentUser,
     getUser,
     signInWithGoogle,
     logInWithEmailAndPassword,
