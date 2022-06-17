@@ -1,13 +1,12 @@
 import styled from 'styled-components'
 
+export const MainFriendsListWrapper = styled.div`
+    display: grid;
+    grid-template-columns: 100px 150px auto;
+`
 export const MainWrapper = styled.div`
     display: grid;
     grid-template-columns: 100px auto;
-`
-
-export const MainChatWrapper = styled.div`
-    display: grid;
-    grid-template-columns: 100px 150px auto;
 `
 
 export const SideNav = styled.nav`

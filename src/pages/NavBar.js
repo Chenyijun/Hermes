@@ -2,10 +2,6 @@ import React from "react";
 import { SideNav } from "../components/wrappers"
 import { logOut } from "../firebase";
 import { Avatar, DefaultAvatar } from '../components/chatComponents'
-import { currentUser } from "../firebase";
-
-
-
 
 const NavBar = ({user}) =>{
 
@@ -13,11 +9,11 @@ const NavBar = ({user}) =>{
     <SideNav>
         <a href="/chat">Chat</a>
         <a href="/activities">Activities</a>
-        <p>{currentUser && currentUser.name}</p>
-        {(currentUser && currentUser.avatar) ? 
-          <Avatar small alt='avatar'src={currentUser && currentUser.avatar} text={currentUser && currentUser.name} />
-          : <DefaultAvatar small>{currentUser && currentUser.name}</DefaultAvatar>}
-        <a href="/profile">Profile</a>
+        <a href="/profile">
+          {(user?.avatar) ? 
+          <Avatar small alt='avatar'src={user?.avatar} text={user?.name} />
+          : <DefaultAvatar small>{user?.name}</DefaultAvatar>}
+        </a>
         <button onClick={logOut}>
           Logout
          </button>

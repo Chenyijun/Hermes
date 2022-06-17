@@ -8,7 +8,7 @@ const ActivityCard = ({ activity }) => {
         <ActivityCardWrapper>
           <p><b>{activity.title || 'activity title'}</b></p>
           <p>{activity.description || 'activity description'}</p>
-          {activity.tags.map(tag => <Tag>{tag}</Tag>)}
+          {activity.tags.map(tag => <Tag key={tag}>{tag}</Tag>)}
       </ActivityCardWrapper>
       </CardLink>
     );

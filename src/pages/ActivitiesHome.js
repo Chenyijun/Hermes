@@ -1,14 +1,26 @@
 import React, {useEffect, useState} from "react";
 import NavBar from "./NavBar"
-import { MainWrapper, SimpleWrapper } from "../components/wrappers"
-import {db} from '../firebase'
-import {collection, addDoc, Timestamp, query, orderBy, onSnapshot} from 'firebase/firestore'
+import { MainFriendsListWrapper, SimpleWrapper } from "../components/wrappers"
+import {auth, db} from '../firebase'
+import {doc, getDoc, collection, query, orderBy, onSnapshot} from 'firebase/firestore'
 import ActivityCard from "../components/ActivityCard";
 import { ActivityFlex} from "../components/activityComponents"
+import { useCollectionData} from "react-firebase-hooks/firestore";
+import { useAuthState } from "react-firebase-hooks/auth";
+import UserList from "./UserList"
+import { onAuthStateChanged } from '@firebase/auth';
+
 
 
 function ActivitiesHome() {
   const [activities, setActivities] = useState([])
+  const [authUser, loading ] = useAuthState(auth);
+  const [user, setUser] = useState(null);
+  const [selectedRecipient, setSelectedRecipient] = useState(null)
+
+  const usersRef = collection(db, 'users');
+  const usersQuery = query(usersRef, orderBy("name"));
+  const [users] = useCollectionData(usersQuery);
 
   /* Get all activities from firestore in realtime */
   useEffect(() => {
@@ -21,18 +33,30 @@ function ActivitiesHome() {
     })
   })
 
+  useEffect(() => {
+		const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+			getDoc(doc(db, 'users', currentUser.uid)).then ((docSnap) => {
+				if (docSnap.exists) {
+					setUser(docSnap.data());
+					console.log('set user', user);
+				}
+			});
+		})
+	},[])
+
 
   return (
-    <MainWrapper>
-    <NavBar />
+    <MainFriendsListWrapper>
+    <NavBar user={user}/>
+    <UserList user={authUser} users={users} db={db} selectedRecipient={selectedRecipient} setSelectedRecipient={setSelectedRecipient}/>
      <SimpleWrapper>
         <h1>Activities Page</h1>
         <h2>Available Activities</h2>
         <ActivityFlex>
-          {activities.map(activity => ( <ActivityCard activity={activity.data} />))}
+          {activities.map(activity => ( <ActivityCard key={activity.id} activity={activity.data} />))}
         </ActivityFlex>
       </SimpleWrapper>
-    </MainWrapper>
+    </MainFriendsListWrapper>
     );
   }
 export default ActivitiesHome;
