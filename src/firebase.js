@@ -50,7 +50,7 @@ const logInWithEmailAndPassword = async (email, password) => {
     }
   }
 
-  const registerWithEmailAndPassword = async (name, email, password) => {
+  const registerWithEmailAndPassword = async (firstName, lastName, email, password) => {
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
       const user = res.user;
@@ -58,12 +58,13 @@ const logInWithEmailAndPassword = async (email, password) => {
 
       //might cause issues?
       updateProfile(auth.currentUser, {
-        displayName: name
+        displayName: firstName
       })
 
       await setDoc(newDocRef, {
         uid: user.uid,
-        name,
+        firstName,
+        lastName,
         authProvider: "local",
         email,
         avatar: '',

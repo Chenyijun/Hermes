@@ -1,16 +1,18 @@
 import React from "react";
-import { Avatar, DefaultAvatar, FriendBubble } from '../components/chatComponents'
+import Avatar from "../components/Avatar";
 import { NavButton, TopNavBar, ThreeTabs, NameWrapper } from "../components/navComponents";
 
-const TopNav = ({friend, navState, setNavState}) =>{
+const TopNav = ({friend, navState, setNavState, timeDelay, setTimeDelay, admin}) =>{
 
   return (
     <TopNavBar>
       <NameWrapper>
-        {(friend?.avatar) ? 
-          <Avatar small alt='avatar'src={friend?.avatar} text={friend?.name} />
-          : <DefaultAvatar small>{friend?.name}</DefaultAvatar>}
-          <p>{friend?.name || "FRIEND NAME"}</p>
+          <Avatar user={friend} />
+          {admin && 
+          <div>
+            <p>{friend?.name || "FRIEND NAME"} {timeDelay && `[TIME DELAYED]`}</p>
+            <button onClick={() => setTimeDelay(!timeDelay)}>{timeDelay ? 'Turn off time delay' : 'Turn on time delay'}</button>
+          </div>}
       </NameWrapper>
       <ThreeTabs>
         <NavButton onClick={()=>setNavState('dashboard')} active={navState==='dashboard'}>Dashboard</NavButton>

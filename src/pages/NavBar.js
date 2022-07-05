@@ -1,7 +1,7 @@
 import React from "react";
 import { SideNav } from "../components/wrappers"
 import { logOut } from "../firebase";
-import { Avatar, DefaultAvatar } from '../components/chatComponents'
+import Avatar from "../components/Avatar";
 
 const NavBar = ({user}) =>{
 
@@ -11,9 +11,7 @@ const NavBar = ({user}) =>{
         <a href="/chat">Chat</a>
         <a href="/activities">Activities</a>
         <a href="/profile">
-          {(user?.avatar) ? 
-          <Avatar small alt='avatar'src={user?.avatar} text={user?.name} />
-          : <DefaultAvatar small>{user?.name}</DefaultAvatar>}
+          <Avatar user={user} />
         </a>
         <button onClick={logOut}>
           Logout

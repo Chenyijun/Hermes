@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import { Avatar, DefaultAvatar } from '../components/chatComponents'
+import Avatar from '../components/Avatar';
 import { MainWrapper } from '../components/wrappers'
 import { auth, db, storage } from '../firebase';
 import { ref, getDownloadURL, uploadBytes, deleteObject } from 'firebase/storage'
@@ -8,25 +8,10 @@ import { updateProfile, onAuthStateChanged } from '@firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import NavBar from './NavBar';
 
-const Profile = () => {
+const Profile = ({user}) => {
 	const [img, setImg] = useState('')
-	const [user, setUser] = useState(null);
 	const [isLoading, setIsLoading] = useState(false);
 	const navigate = useNavigate("");
-	console.log('user', user)
-
-	useEffect(() => {
-		setIsLoading(true);
-		const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-			getDoc(doc(db, 'users', currentUser.uid)).then ((docSnap) => {
-				if (docSnap.exists) {
-					setUser(docSnap.data());
-					setIsLoading(false);
-					console.log('set user', user);
-				}
-			});
-		})
-	},[])
 
 	useEffect(() => {
 			if (img){
@@ -80,23 +65,22 @@ const deleteImage = async () => {
 };
 
 return(
-	<MainWrapper>
-		<NavBar user={user}/>
+	<>
 		{isLoading ? (<div>Loading</div>)
 		: (<div>
-				{(user && user.avatar) ? 
-					<Avatar alt='avatar'src={user && user.avatar} text={user&& user.name} />
-					: <DefaultAvatar>{user && user.name}</DefaultAvatar>}
+				<Avatar user={user} />
 				<input 
 						type='file'
 						accept='image'
 						onChange={(e) => setImg(e.target.files[0])}/>
 				<button onClick={() => deleteImage()}>Delete Image</button>
 				<p>{user?.name || 'name'}</p>
+				<p>{user?.firstName || 'first name'}</p>
+				<p>{user?.lastName || 'last name'}</p>
 				<p>{user?.email || 'email'}</p>
 			</div>)
 		}
- </MainWrapper>
+ </>
 	)
 }
 

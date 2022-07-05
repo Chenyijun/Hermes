@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { darkPurple } from '../constants'
 
 export const MainFriendsListWrapper = styled.div`
     display: grid;
@@ -11,8 +12,8 @@ export const MainWrapper = styled.div`
 
 export const HomeWrapper = styled.div`
     display: grid;
-    grid-template-columns: 150px auto;
-    grid-template-rows: 130px auto;
+    grid-template-columns: 100px auto;
+    grid-template-rows: minmax(auto, 175px) auto;
     grid-template-areas: "sidenav topnav" "sidenav body";
 `
 
@@ -28,8 +29,8 @@ export const SideNav = styled.nav`
 `
 
 export const UserListWrapper = styled.div`
-    background: #ccc;
-    width: 150px;
+    background: ${darkPurple};
+    width: 100px;
     box-sizing: border-box;
     padding: 1rem;
     height: 100%;

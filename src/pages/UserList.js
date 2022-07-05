@@ -1,8 +1,10 @@
 import React from "react";
 import { UserListWrapper } from '../components/wrappers'
-import { Avatar, DefaultAvatar, FriendBubble } from '../components/chatComponents'
+import { FriendBubble } from '../components/chatComponents'
+import { UserButton } from "../components/navComponents";
+import Avatar from "../components/Avatar";
 
-const UserList = ({ user, users, setSelectedFriend, selectedFriend}) => {
+const UserList = ({ user, users, setSelectedFriend, selectedFriend, setNavState}) => {
 
 	const friends = user && users && users.filter(friend => friend.uid !== user.uid);
 
@@ -12,18 +14,17 @@ const UserList = ({ user, users, setSelectedFriend, selectedFriend}) => {
 
 	return (
 		<UserListWrapper>
-			Friends List
 				{user && users && friends.map(friend => {
 				return (
-						<button key={friend.uid} onClick={()=>toggleRecipient(friend)}>
-							<FriendBubble selected={selectedFriend?.uid === friend.uid}>
-								{friend && friend.avatar ? 
-									<Avatar small alt='avatar'src={friend && friend.avatar} text={friend && friend.name} />
-									: <DefaultAvatar small>{friend && friend.name}</DefaultAvatar>}
-								{friend.name}
-							</FriendBubble>
-						</button>
+						<UserButton key={friend.uid} onClick={()=>toggleRecipient(friend)} selected={selectedFriend?.uid === friend.uid}>
+							<Avatar user={friend} />
+							{friend.name}
+						</UserButton>
 				)})}
+			<UserButton onClick={()=>setNavState('profile')}>
+				<Avatar user={user} />
+				{user.name || 'My Profile'}
+			</UserButton>
 		</UserListWrapper>
 	);
   };

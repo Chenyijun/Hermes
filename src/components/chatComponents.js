@@ -1,13 +1,13 @@
 import styled from 'styled-components'
 
-export const Avatar = styled.img`
+export const AvatarBubble = styled.img`
     height: ${props => props.small ? '50px' : '100px'};
     width: ${props => props.small ? '50px' : '100px'};
     background: blue;
     border-radius: 50%;
 `
 
-export const DefaultAvatar = styled.div`
+export const DefaultAvatarBubble = styled.div`
     height: ${props => props.small ? '50px' : '100px'};
     width: ${props => props.small ? '50px' : '100px'};
     background: blue;

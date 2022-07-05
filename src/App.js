@@ -18,8 +18,6 @@ function App() {
         <Route exact path="/" element={<Login />} />
         <Route exact path="/register" element={<Register />} />
         <Route exact path="/reset" element={<Reset />} />
-        <Route exact path="/chat" element={<ChatHome />} />
-        <Route exact path="/activities" element={<ActivitiesHome />} />
         <Route path="/home" element={<Home />} />
         <Route exact path="/profile" element={<Profile />} />
         <Route path={`/activity/:activityID`} element={<Activity />} />

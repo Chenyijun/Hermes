@@ -26,6 +26,7 @@ export const NavButton = styled.button`
   font-size: 20px;
   font-family: "Poppins", sans-serif; 
   box-sizing: border-box;
+  cursor: pointer;
 `
 
 export const NameWrapper = styled.div`
@@ -39,4 +40,17 @@ export const NameWrapper = styled.div`
     font-family: "Poppins", sans-serif; 
     box-sizing: border-box;
   }
+`
+
+export const UserButton = styled.button`
+  background: ${props => props.selected ? `white` : 'none'};
+  border: none;
+  color: ${props => props.selected ? 'black' : 'white'};
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-bottom: 1rem;
 `

@@ -8,14 +8,16 @@ import {
 function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+
   const navigate = useNavigate();
 
 
   const register = () => {
     console.log(email)
-    if (!name) alert("Please enter name");
-    registerWithEmailAndPassword(name, email, password);
+    if (!firstName) alert("Please enter first name");
+    registerWithEmailAndPassword(firstName, lastName, email, password);
     navigate("/chat");
   };
 
@@ -24,9 +26,15 @@ function Register() {
       <div >
         <input
           type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Full Name"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+          placeholder="First Name"
+        />
+        <input
+          type="text"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+          placeholder="Last Name"
         />
         <input
           type="text"
