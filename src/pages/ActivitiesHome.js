@@ -9,6 +9,7 @@ import { useCollectionData} from "react-firebase-hooks/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import UserList from "./UserList"
 import { onAuthStateChanged } from '@firebase/auth';
+import FriendActivitiesHome from "./FriendActivitiesHome";
 
 
 
@@ -38,7 +39,6 @@ function ActivitiesHome() {
 			getDoc(doc(db, 'users', currentUser.uid)).then ((docSnap) => {
 				if (docSnap.exists) {
 					setUser(docSnap.data());
-					console.log('set user', user);
 				}
 			});
 		})
@@ -51,7 +51,7 @@ function ActivitiesHome() {
       <UserList user={authUser} users={users} db={db} selectedFriend={selectedFriend} setSelectedFriend={setSelectedFriend}/>
       <SimpleWrapper>
         {selectedFriend ? (
-          <h1>{selectedFriend.name}</h1>
+          <FriendActivitiesHome user={user} friend={selectedFriend}/>
         )
       : ( <>
             <h1>Activities Page</h1>

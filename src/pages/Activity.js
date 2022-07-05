@@ -15,10 +15,7 @@ const Activity = () => {
     const activityRef = doc(db, 'activities', activityID)
     const activitySnapshot = await getDoc(activityRef)
     setActivity(activitySnapshot.data())
-    console.log('set')
   }
-
-  console.log(activity)
 
   useEffect(() => {
     getActivity()

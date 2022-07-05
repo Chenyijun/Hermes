@@ -9,6 +9,13 @@ export const MainWrapper = styled.div`
     grid-template-columns: 100px auto;
 `
 
+export const HomeWrapper = styled.div`
+    display: grid;
+    grid-template-columns: 150px auto;
+    grid-template-rows: 130px auto;
+    grid-template-areas: "sidenav topnav" "sidenav body";
+`
+
 export const SideNav = styled.nav`
     background: #aaa;
     width: 100px;
@@ -29,6 +36,7 @@ export const UserListWrapper = styled.div`
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    grid-area: sidenav;
 `
 
 export const ChatWrapper = styled.div`
@@ -49,4 +57,8 @@ export const MessageTextWrapper = styled.div`
 
 export const SimpleWrapper = styled.div`
     padding: 1rem;
+`
+export const BodyWrapper = styled.div`
+    padding: 1rem;
+    grid-area: body;
 `

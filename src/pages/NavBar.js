@@ -7,6 +7,7 @@ const NavBar = ({user}) =>{
 
   return (
     <SideNav>
+        <a href="/home">Home</a>
         <a href="/chat">Chat</a>
         <a href="/activities">Activities</a>
         <a href="/profile">

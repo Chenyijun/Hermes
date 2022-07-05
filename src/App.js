@@ -8,6 +8,7 @@ import Reset from './pages/Reset';
 import ActivitiesHome from './pages/ActivitiesHome';
 import Profile from './pages/Profile';
 import Activity from './pages/Activity';
+import Home from './pages/Home';
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
         <Route exact path="/reset" element={<Reset />} />
         <Route exact path="/chat" element={<ChatHome />} />
         <Route exact path="/activities" element={<ActivitiesHome />} />
+        <Route path="/home" element={<Home />} />
         <Route exact path="/profile" element={<Profile />} />
         <Route path={`/activity/:activityID`} element={<Activity />} />
         <Route path="*" element={<Login />} />

@@ -1,0 +1,42 @@
+import styled from 'styled-components'
+import { accentOrange, darkGray } from '../constants'
+
+export const TopNavBar = styled.nav`
+  display: flex;
+  flex-direction: column;
+  grid-area: topnav;
+  align-items: center;
+  background: black;
+`
+
+export const ThreeTabs = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  width: 100%;
+`
+
+export const NavButton = styled.button`
+  height: 100%;
+  width: 100%;
+  color: ${props => props.active ? accentOrange : darkGray};
+  background: black;
+  border: none;
+  padding: 1rem;
+  font-weight: 600;
+  font-size: 20px;
+  font-family: "Poppins", sans-serif; 
+  box-sizing: border-box;
+`
+
+export const NameWrapper = styled.div`
+  padding: 1rem;
+  display: flex;
+  & p{
+    color: white;
+    padding-left: 1rem;
+    font-weight: 600;
+    font-size: 20px;
+    font-family: "Poppins", sans-serif; 
+    box-sizing: border-box;
+  }
+`
