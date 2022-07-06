@@ -18,7 +18,7 @@ function Register() {
     console.log(email)
     if (!firstName) alert("Please enter first name");
     registerWithEmailAndPassword(firstName, lastName, email, password);
-    navigate("/chat");
+    navigate("/home");
   };
 
   return (

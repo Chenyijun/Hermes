@@ -31,6 +31,8 @@ function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [navState, setNavState] = useState('dashboard')
 
+  const isProfile = navState === 'profile'
+
   useEffect(() => {
     if (loading) return;
     if (!authUser) return navigate("/");
@@ -53,17 +55,15 @@ function Home() {
     setSelectedFriend(users && users[0])
   },[users])
 
-  console.log('user', user)
-
   return (
-    <HomeWrapper>
-      <TopNavBar friend={selectedFriend} navState={navState} setNavState={setNavState} timeDelay={timeDelay} setTimeDelay={setTimeDelay} admin={user?.admin}/>
-      <UserList user={authUser} users={users} db={db} selectedFriend={selectedFriend} setSelectedFriend={setSelectedFriend}  setNavState={setNavState}/>
-      <BodyWrapper>
+    <HomeWrapper profile={navState === 'profile'}>
+      <UserList user={authUser} users={users} db={db} selectedFriend={selectedFriend} setSelectedFriend={setSelectedFriend} navState={navState} setNavState={setNavState}/>
+      {isProfile && <Profile user={user} />}
+      {!isProfile && <TopNavBar friend={selectedFriend} navState={navState} setNavState={setNavState} timeDelay={timeDelay} setTimeDelay={setTimeDelay} admin={user?.admin}/>}
+      {!isProfile && <BodyWrapper>
         {navState === 'messages' && <ChatHome user={user} selectedFriend={selectedFriend} users={users} timeDelay={timeDelay} />}
         {navState === 'sparks' && <ActivitiesHome user={user} selectedFriend={selectedFriend} />}
-        {navState === 'profile' && <Profile user={user} />}
-      </BodyWrapper>
+      </BodyWrapper>}
     </HomeWrapper>
     );
   }

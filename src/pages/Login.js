@@ -13,7 +13,7 @@ function Login() {
       // maybe trigger a loading screen
       return;
     }
-    if (user) navigate("/chat");
+    if (user) navigate("/home");
   }, [user, loading]);
 
   return (

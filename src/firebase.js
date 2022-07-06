@@ -58,7 +58,9 @@ const logInWithEmailAndPassword = async (email, password) => {
 
       //might cause issues?
       updateProfile(auth.currentUser, {
-        displayName: firstName
+        displayName: firstName + ' ' + lastName,
+        firstName: firstName,
+        lastName: lastName
       })
 
       await setDoc(newDocRef, {

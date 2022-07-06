@@ -10,9 +10,11 @@ const Avatar = ({ user }) => {
 
     return (
       <div>
-      {user?.avatar ?
-        <AvatarBubble small alt='avatar' src={user?.avatar} text={initials} />
-        : <DefaultAvatarBubble small>{initials}</DefaultAvatarBubble>
+      {user ? 
+        user?.avatar ?
+          <AvatarBubble small alt='avatar' src={user?.avatar} text={initials} />
+          : <DefaultAvatarBubble small>{initials}</DefaultAvatarBubble>
+        :  <DefaultAvatarBubble small>+</DefaultAvatarBubble>
       }
       </div>
     );

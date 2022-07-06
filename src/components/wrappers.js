@@ -13,7 +13,7 @@ export const MainWrapper = styled.div`
 export const HomeWrapper = styled.div`
     display: grid;
     grid-template-columns: 100px auto;
-    grid-template-rows: minmax(auto, 175px) auto;
+    grid-template-rows: minmax(auto, 175px) auto; // 145
     grid-template-areas: "sidenav topnav" "sidenav body";
 `
 

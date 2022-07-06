@@ -8,9 +8,10 @@ const TopNav = ({friend, navState, setNavState, timeDelay, setTimeDelay, admin})
     <TopNavBar>
       <NameWrapper>
           <Avatar user={friend} />
+          <p>{friend?.name || "FRIEND NAME"}</p>
           {admin && 
           <div>
-            <p>{friend?.name || "FRIEND NAME"} {timeDelay && `[TIME DELAYED]`}</p>
+            <p>{timeDelay && `[TIME DELAYED]`}</p>
             <button onClick={() => setTimeDelay(!timeDelay)}>{timeDelay ? 'Turn off time delay' : 'Turn on time delay'}</button>
           </div>}
       </NameWrapper>
