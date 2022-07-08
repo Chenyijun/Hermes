@@ -9,11 +9,13 @@ const Message = ({ sender, text, sending, message, recieveTime, timeStamp, date 
   const haveSent = () => {
     return moment(recieveTime.toDate()) < moment(date)
   }
+  console.log('msg', text)
+  console.log('sending', sending)
 
     return (
-      <MessageWrapper key={message && message.id} sending={sending}>
+      <MessageWrapper key={message && message.id}>
         <Avatar user={sender} />
-        <MessageTextWrapper>{text}</MessageTextWrapper>
+        <MessageTextWrapper sending={sending}>{text}</MessageTextWrapper>
         <TimeText>{haveSent() ? `Sent ${sentTime} > Recieved ${recieveAt}`:`Sent ${sentTime} > Sending... (will recieve at ${recieveAt})`}</TimeText>
         {/* h:mma or HH:mm for military time*/}
       </MessageWrapper>

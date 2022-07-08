@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { UserListWrapper } from '../components/wrappers'
-import { UserButton } from "../components/navComponents";
+import { UserButton, UserButtonText } from "../components/navComponents";
 import { doc, updateDoc} from '@firebase/firestore';
 import { db } from '../firebase';
 import Avatar from "../components/Avatar";
@@ -37,18 +37,18 @@ const UserList = ({ user, users, setSelectedFriend, selectedFriend, setNavState,
 		<UserListWrapper>
 			<UserButton onClick={()=>onProfileClick()} selected={selectedFriend?.uid === user?.uid}>
 				<Avatar user={user} />
-				{user?.name || 'My Profile'}
+				<UserButtonText>{user?.name || 'My Profile'}</UserButtonText>
 			</UserButton>
 			{user && myFriends?.map(friend => {
 			return (
 					<UserButton key={friend.uid} onClick={()=>onUserClick(friend)} selected={selectedFriend?.uid === friend.uid}>
 						<Avatar user={friend} />
-						{friend.firstName}
+						<UserButtonText>{friend.firstName}</UserButtonText>
 					</UserButton>
 			)})}
 			<UserButton key={'addFriend'} onClick={()=>setOpenModal(true)}>
 				<Avatar />
-				Add Friend
+				<UserButtonText>Add Friend</UserButtonText>
 			</UserButton>
 			<button onClick={logOut}>Logout</button>
 			<UserModal openModal={openModal} setOpenModal={setOpenModal} allUsers={allUsers} user={user} myFriendsList={myFriendsList}/>

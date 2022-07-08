@@ -39,7 +39,7 @@ export const MessageWrapper = styled.div`
 
 export const MessageTextWrapper = styled.div`
     padding: 1rem;
-    background: ${props => props.sending ? '#5730F3' : fadedPurple};
+    background: ${props => props.sending ? fadedPurple : '#5730F3'};
     border-radius: 10px;
     grid-area: message;
     color: white;
@@ -75,6 +75,9 @@ export const ChatInput = styled.input`
 export const ChatForm = styled.form`
     display: flex;
     padding: 1rem 0;
+    position: sticky;
+    bottom: 0;
+    background: black;
 `
 
 export const SendButton = styled.button`

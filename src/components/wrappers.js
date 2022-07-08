@@ -16,6 +16,7 @@ export const HomeWrapper = styled.div`
     grid-template-columns: 100px auto;
     grid-template-rows: minmax(auto, 145px) auto;
     grid-template-areas: "sidenav topnav" "sidenav body";
+    height: 100vh;
 `
 
 export const SideNav = styled.nav`
@@ -52,4 +53,5 @@ export const BodyWrapper = styled.div`
     padding: 1rem;
     grid-area: body;
     background: black;
+    overflow: scroll;
 `

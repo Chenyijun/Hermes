@@ -36,6 +36,17 @@ export const NameWrapper = styled.div`
   grid-gap: 1rem;
 `
 
+
+export const NameHeader = styled.h1`
+  color: white;
+  font-weight: 600;
+  font-size: 20px;
+  font-family: "Poppins", sans-serif; 
+  box-sizing: border-box;
+`
+
+// User List
+
 export const UserButton = styled.button`
   background: ${props => props.selected ? `white` : 'none'};
   border: none;
@@ -47,12 +58,13 @@ export const UserButton = styled.button`
   border-radius: 10px;
   cursor: pointer;
   margin-bottom: 1rem;
+  padding: 0.5rem 0;
 `
 
-export const NameHeader = styled.h1`
-  color: white;
-  font-weight: 600;
-  font-size: 20px;
+export const UserButtonText = styled.p`
+  font-size: 12px;
   font-family: "Poppins", sans-serif; 
-  box-sizing: border-box;
+  font-weight: 400;
+  margin-top: 8px;
+  margin-bottom: 0;
 `
