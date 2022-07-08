@@ -4,19 +4,26 @@ import { lightGray, fadedPurple, darkPurple } from '../constants'
 export const AvatarBubble = styled.img`
     height: ${props => props.small ? '50px' : '100px'};
     width: ${props => props.small ? '50px' : '100px'};
-    background: blue;
+    background: ${lightGray};
     border-radius: 50%;
 `
 
 export const DefaultAvatarBubble = styled.div`
     height: ${props => props.small ? '50px' : '100px'};
     width: ${props => props.small ? '50px' : '100px'};
-    background: blue;
+    background: ${lightGray};
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
+    box-sizing: border-box;
+
+    & p {
+        font-family: "Poppins", sans-serif; 
+        font-weight: 600;
+        color: black;
+        font-size: 20px;
+    }
 `
 
 export const MessageWrapper = styled.div`

@@ -54,9 +54,9 @@ function Home() {
 		})
 	},[])
 
-  // useEffect( () => {
-  //   setSelectedFriend(users && users[0])
-  // },[users])
+  useEffect( () => {
+    user && (user.friends.length > 0 ? setSelectedFriend(users && users[0]) : setSelectedFriend(user))
+  },[users])
 
   return (
     <HomeWrapper profile={navState === 'profile'}>

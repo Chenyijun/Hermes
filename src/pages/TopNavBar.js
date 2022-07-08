@@ -1,6 +1,6 @@
 import React from "react";
 import Avatar from "../components/Avatar";
-import { NavButton, TopNavBar, ThreeTabs, NameWrapper } from "../components/navComponents";
+import { NavButton, TopNavBar, ThreeTabs, NameWrapper, NameHeader } from "../components/navComponents";
 
 const TopNav = ({friend, navState, setNavState, timeDelay, setTimeDelay, admin}) =>{
   console.log('FRIEND', friend)
@@ -8,7 +8,7 @@ const TopNav = ({friend, navState, setNavState, timeDelay, setTimeDelay, admin})
     <TopNavBar>
       <NameWrapper>
           <Avatar user={friend} />
-          <p>{friend?.firstName + ' ' + friend?.lastName || "FRIEND NAME"}</p>
+          <NameHeader>{friend?.firstName + ' ' + friend?.lastName || "FRIEND NAME"}</NameHeader>
           {admin && 
           <div>
             <p>{timeDelay && `[TIME DELAYED]`}</p>

@@ -31,15 +31,9 @@ export const NavButton = styled.button`
 
 export const NameWrapper = styled.div`
   padding: 1rem;
-  display: flex;
-  & p{
-    color: white;
-    padding-left: 1rem;
-    font-weight: 600;
-    font-size: 20px;
-    font-family: "Poppins", sans-serif; 
-    box-sizing: border-box;
-  }
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: 1rem;
 `
 
 export const UserButton = styled.button`
@@ -53,4 +47,12 @@ export const UserButton = styled.button`
   border-radius: 10px;
   cursor: pointer;
   margin-bottom: 1rem;
+`
+
+export const NameHeader = styled.h1`
+  color: white;
+  font-weight: 600;
+  font-size: 20px;
+  font-family: "Poppins", sans-serif; 
+  box-sizing: border-box;
 `

@@ -11,7 +11,7 @@ import { logOut } from '../firebase';
 const UserList = ({ user, users, setSelectedFriend, selectedFriend, setNavState, navState}) => {
   const [openModal, setOpenModal] = useState(false)
 	const [myFriendsList, setMyFriendsList] = useState([])
-	const allUsers = users?.filter(friend => friend.uid !== user.uid);
+	const allUsers = user && users?.filter(friend => (friend.uid !== user.uid) && !myFriendsList?.includes(friend.uid));
 	const myFriends = myFriendsList && users?.filter(friend => myFriendsList.includes(friend.uid));
 	// console.log("users", users)
 	// console.log("friends", friends)
@@ -35,7 +35,7 @@ const UserList = ({ user, users, setSelectedFriend, selectedFriend, setNavState,
 
 	return (
 		<UserListWrapper>
-			<UserButton onClick={()=>onProfileClick()} selected={navState === 'profile'}>
+			<UserButton onClick={()=>onProfileClick()} selected={selectedFriend?.uid === user?.uid}>
 				<Avatar user={user} />
 				{user?.name || 'My Profile'}
 			</UserButton>
@@ -58,17 +58,26 @@ const UserList = ({ user, users, setSelectedFriend, selectedFriend, setNavState,
 
 const UserModal = ({openModal, setOpenModal, allUsers, user, myFriendsList}) => {
 	const [newFriend, setNewFriend] = useState('')
+	const [theirFriendsList, setTheirFriendsList] = useState([])
 	
 	const handleChange = (event) => {
     setNewFriend(event.target.value);
   }
 
+	useEffect( () => {
+    setTheirFriendsList(newFriend?.friends)
+		console.log('their friends list', theirFriendsList)
+  },[newFriend])
+
 	const addFriend = async () => {		
 		try {
 			myFriendsList.push(newFriend.uid)
-			console.log(myFriendsList)
+			theirFriendsList.push(user.uid)
 			await updateDoc(doc(db, "users", user.uid), {
 				friends: myFriendsList
+			});
+			await updateDoc(doc(db, "users", newFriend.uid), {
+				friends: theirFriendsList
 			});
 			setOpenModal(false)
 		} catch (err) {
@@ -87,26 +96,31 @@ const UserModal = ({openModal, setOpenModal, allUsers, user, myFriendsList}) => 
 				background: 'white',
 				transform: 'translate(75%, 30%)',
 				width: '400px',
-				height: '400px'
+				height: '400px',
+				padding: '1rem'
       }}>
-			<FormControl sx={{ m: 1, minWidth: 80 }}>
-				<InputLabel id="demo-simple-select-label">Add Friend</InputLabel>
-				<Select
-					labelId="demo-simple-select-label"
-					id="demo-simple-select"
-					value={newFriend}
-					label="Age"
-					onChange={handleChange}
-				>
-					{allUsers?.map(friend => {
-						return (
-								<MenuItem key={friend.firstName} value={friend}>
-									{friend.firstName + " " + friend.lastName}
-								</MenuItem>
-						)})}
-				</Select>
-				<button onClick={()=>addFriend()}>Add</button>
-			</FormControl>
+				{allUsers?.length === 0 ?
+					<p>All the users on the platform is already your friend! Invite your friends to join Spark!</p>	
+					: <FormControl sx={{ m: 1, minWidth: 80 }}>
+						<InputLabel id="demo-simple-select-label">Add Friend</InputLabel>
+						<Select
+							labelId="demo-simple-select-label"
+							id="demo-simple-select"
+							value={newFriend}
+							label="Age"
+							onChange={handleChange}
+							disabled={allUsers?.length === 0}
+						>
+							{allUsers?.map(friend => {
+								return (
+										<MenuItem key={friend.firstName} value={friend}>
+											{friend.firstName + " " + friend.lastName}
+										</MenuItem>
+								)})}
+						</Select>
+						<button onClick={()=>addFriend()}>Add</button>
+					</FormControl>
+				}
 		</Box>
 	</Modal>
   )
