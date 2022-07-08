@@ -6,7 +6,6 @@ import { ref, getDownloadURL, uploadBytes, deleteObject } from 'firebase/storage
 import { getDoc, doc, updateDoc} from '@firebase/firestore';
 import { updateProfile, onAuthStateChanged } from '@firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import NavBar from './NavBar';
 
 const Profile = ({user}) => {
 	const [img, setImg] = useState('')

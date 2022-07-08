@@ -2,10 +2,8 @@ import React from 'react';
 // Firebase deps
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from './pages/Login'
-import ChatHome from './pages/ChatHome'
 import Register from './pages/Register';
 import Reset from './pages/Reset';
-import ActivitiesHome from './pages/ActivitiesHome';
 import Profile from './pages/Profile';
 import Activity from './pages/Activity';
 import Home from './pages/Home';

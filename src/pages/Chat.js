@@ -1,19 +1,19 @@
 import React, { useState, useRef, useEffect } from "react";
-import {addDoc, serverTimestamp, Timestamp } from "firebase/firestore";
+import {addDoc, Timestamp } from "firebase/firestore";
 import { auth } from "../firebase";
 import {ChatWrapper} from '../components/wrappers'
+import { ChatForm, ChatInput, SendButton } from "../components/chatComponents";
 import Message from "../components/Message"
-import moment from 'moment'
 
 
 const Chat = ({ user, users, messages, messageCollection, timeDelay, friend}) => {
 
     const [formValue, setFormValue] = useState('');
-    const [date, setDate] = useState(new Date());
+    const [currDate, setCurrDate] = useState(new Date());
     const drop = useRef()
 
     useEffect(() => {
-      var timer = setInterval(()=> setDate(new Date()), 1000)
+      var timer = setInterval(()=> setCurrDate(new Date()), 1000)
 
       return function cleanup() {
         clearInterval(timer)
@@ -28,7 +28,7 @@ const Chat = ({ user, users, messages, messageCollection, timeDelay, friend}) =>
         await addDoc(messageCollection, {
             text: formValue,
             createdAt: Timestamp.now(),
-            sentAt: new Timestamp(Timestamp.now().seconds + 1200, Timestamp.now().nanoseconds),
+            sentAt: new Timestamp(Timestamp.now().seconds + 600, Timestamp.now().nanoseconds),
             uid,
             recipientUid: friend.uid || '',
         })
@@ -54,18 +54,13 @@ const Chat = ({ user, users, messages, messageCollection, timeDelay, friend}) =>
             return user.uid === message.uid
           })
           const sending = message.uid === user.uid
-          if (friend){
-            return checkFriendFilterMsg(friend?.uid, message) && (timeDelay ? (moment(message.sentAt.toDate()) < moment(date) && <Message key={message.id} sender={sender} text={message.text} message={message} sending={sending} timeStamp={message.sentAt}/>)
-            :  <Message key={message.id} sender={sender} text={message.text} message={message} sending={sending} timeStamp={message.createdAt}/>)
-          } else {
-            return timeDelay ? (moment(message.sentAt.toDate()) < moment(date) && <Message key={message.id} sender={sender} text={message.text} message={message} sending={sending} timeStamp={message.sentAt}/>)
-          :  <Message key={message.id} sender={sender} text={message.text} message={message} sending={sending} timeStamp={message.createdAt}/>
-          }
+          return checkFriendFilterMsg(friend?.uid, message)
+            && <Message key={message.id} sender={sender} text={message.text} message={message} sending={sending} recieveTime={message.sentAt} timeStamp={message.createdAt} currDate={currDate}/>
         })}
-        <form onSubmit={sendMessage}>
-        <input value={formValue} onChange={(e) => setFormValue(e.target.value)} />
-        <button type="submit">Submit</button>
-        </form>
+        <ChatForm onSubmit={sendMessage}>
+        <ChatInput value={formValue} onChange={(e) => setFormValue(e.target.value)} />
+        <SendButton type="submit">Submit</SendButton>
+        </ChatForm>
         {/* Forced scroll */}
         <div ref={drop}></div>
       </ChatWrapper>

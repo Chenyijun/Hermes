@@ -1,15 +1,10 @@
 import React, {useEffect, useState} from "react";
-import NavBar from "./NavBar"
-import { MainFriendsListWrapper, SimpleWrapper } from "../components/wrappers"
-import {auth, db} from '../firebase'
-import {doc, getDoc, collection, query, orderBy, onSnapshot, where} from 'firebase/firestore'
+import { SimpleWrapper } from "../components/wrappers"
+import {db} from '../firebase'
+import {collection, query, orderBy, onSnapshot, where} from 'firebase/firestore'
 import ActivityCard from "../components/ActivityCard";
 import { ActivityFlex} from "../components/activityComponents"
 import { useCollectionData} from "react-firebase-hooks/firestore";
-import { useAuthState } from "react-firebase-hooks/auth";
-import UserList from "./UserList"
-import { onAuthStateChanged } from '@firebase/auth';
-import FriendActivitiesHome from "./FriendActivitiesHome";
 
 function ActivitiesHome({user, selectedFriend}) {
   const [allActivities, setAllActivities] = useState([])

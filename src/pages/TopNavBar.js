@@ -3,12 +3,12 @@ import Avatar from "../components/Avatar";
 import { NavButton, TopNavBar, ThreeTabs, NameWrapper } from "../components/navComponents";
 
 const TopNav = ({friend, navState, setNavState, timeDelay, setTimeDelay, admin}) =>{
-
+  console.log('FRIEND', friend)
   return (
     <TopNavBar>
       <NameWrapper>
           <Avatar user={friend} />
-          <p>{friend?.name || "FRIEND NAME"}</p>
+          <p>{friend?.firstName + ' ' + friend?.lastName || "FRIEND NAME"}</p>
           {admin && 
           <div>
             <p>{timeDelay && `[TIME DELAYED]`}</p>

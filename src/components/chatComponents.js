@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { lightGray, fadedPurple, darkPurple } from '../constants'
 
 export const AvatarBubble = styled.img`
     height: ${props => props.small ? '50px' : '100px'};
@@ -18,6 +19,25 @@ export const DefaultAvatarBubble = styled.div`
     color: white;
 `
 
+export const MessageWrapper = styled.div`
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: minmax(auto, 70px) auto;
+    grid-template-areas: "avatar message" ". time";
+
+    & ${AvatarBubble} ${DefaultAvatarBubble} {
+        grid-area: avatar;
+    }
+`
+
+export const MessageTextWrapper = styled.div`
+    padding: 1rem;
+    background: ${props => props.sending ? '#5730F3' : fadedPurple};
+    border-radius: 10px;
+    grid-area: message;
+    color: white;
+`
+
 export const ChatHeader = styled.div`
     background: #eee;
     padding: 1rem;
@@ -31,4 +51,30 @@ export const FriendBubble = styled.div`
     justify-content: center;
     align-items: center;
     border: ${props => props.selected && `2px solid blue`};
+`
+
+export const TimeText = styled.p`
+    color: ${lightGray};
+    grid-area: time;
+`
+
+export const ChatInput = styled.input`
+    width: 100%;
+    padding: 1rem;
+    border-radius: 10px;
+    border: none;
+`
+
+export const ChatForm = styled.form`
+    display: flex;
+    padding: 1rem 0;
+`
+
+export const SendButton = styled.button`
+    background: ${darkPurple};
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 0 1rem;
+    margin-left: 1rem;
 `

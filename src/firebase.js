@@ -70,7 +70,8 @@ const logInWithEmailAndPassword = async (email, password) => {
         authProvider: "local",
         email,
         avatar: '',
-        avatarPath: ''
+        avatarPath: '',
+        friends: []
       });
     } catch (err) {
       console.error(err);

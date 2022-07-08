@@ -16,7 +16,6 @@ import ActivitiesHome from "./ActivitiesHome";
 import Profile from "./Profile";
 
 
-
 function Home() {
   const navigate = useNavigate();
   const [authUser, loading ] = useAuthState(auth);
@@ -24,14 +23,18 @@ function Home() {
   const [timeDelay, setTimeDelay] = useState(true)
 
   const usersRef = collection(db, 'users');
-  const usersQuery = query(usersRef, orderBy("name"));
+  const usersQuery = query(usersRef, orderBy("firstName"));
   const [users] = useCollectionData(usersQuery);
 
   const [selectedFriend, setSelectedFriend] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [navState, setNavState] = useState('dashboard')
 
-  const isProfile = navState === 'profile'
+  const isProfile = selectedFriend?.uid === user?.uid
+  // console.log('authUser', authUser)
+  console.log('user', user)
+  console.log('selectedFriend', selectedFriend)
+  console.log('users', users)
 
   useEffect(() => {
     if (loading) return;
@@ -51,13 +54,13 @@ function Home() {
 		})
 	},[])
 
-  useEffect( () => {
-    setSelectedFriend(users && users[0])
-  },[users])
+  // useEffect( () => {
+  //   setSelectedFriend(users && users[0])
+  // },[users])
 
   return (
     <HomeWrapper profile={navState === 'profile'}>
-      <UserList user={authUser} users={users} db={db} selectedFriend={selectedFriend} setSelectedFriend={setSelectedFriend} navState={navState} setNavState={setNavState}/>
+      <UserList user={user} users={users} db={db} selectedFriend={selectedFriend} setSelectedFriend={setSelectedFriend} navState={navState} setNavState={setNavState}/>
       {isProfile && <Profile user={user} />}
       {!isProfile && <TopNavBar friend={selectedFriend} navState={navState} setNavState={setNavState} timeDelay={timeDelay} setTimeDelay={setTimeDelay} admin={user?.admin}/>}
       {!isProfile && <BodyWrapper>

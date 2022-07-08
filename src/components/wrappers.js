@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+
 import { darkPurple } from '../constants'
 
 export const MainFriendsListWrapper = styled.div`
@@ -13,7 +14,7 @@ export const MainWrapper = styled.div`
 export const HomeWrapper = styled.div`
     display: grid;
     grid-template-columns: 100px auto;
-    grid-template-rows: minmax(auto, 175px) auto; // 145
+    grid-template-rows: minmax(auto, 145px) auto;
     grid-template-areas: "sidenav topnav" "sidenav body";
 `
 
@@ -44,22 +45,11 @@ export const ChatWrapper = styled.div`
     padding: 1rem;
 `
 
-export const MessageWrapper = styled.div`
-    padding: 1rem;
-    display: grid;
-    grid-template-columns: minmax(auto, 100px) auto;
-`
-
-export const MessageTextWrapper = styled.div`
-    padding: 1rem;
-    background: #eee;
-    border-radius: 10px;
-`
-
 export const SimpleWrapper = styled.div`
     padding: 1rem;
 `
 export const BodyWrapper = styled.div`
     padding: 1rem;
     grid-area: body;
+    background: black;
 `

@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from "react";
-import NavBar from "./NavBar"
 import { MainWrapper, SimpleWrapper } from "../components/wrappers"
 import { useParams, useNavigate } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
@@ -22,7 +21,6 @@ const Activity = () => {
   }, [])
     return (
       <MainWrapper>
-        <NavBar />
         <SimpleWrapper>
           <button onClick={()=> navigate(-1)}>Back</button>
           <h1>{activity.title || 'activity title'}</h1>
