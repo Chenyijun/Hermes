@@ -21,10 +21,13 @@ function Home() {
   const [authUser, loading ] = useAuthState(auth);
   const [user, setUser] = useState(null);
   const [timeDelay, setTimeDelay] = useState(true)
+  const [myFriendsList, setMyFriendsList] = useState([])
 
   const usersRef = collection(db, 'users');
   const usersQuery = query(usersRef, orderBy("firstName"));
   const [users] = useCollectionData(usersQuery);
+  const myFriends = myFriendsList && users?.filter(friend => myFriendsList.includes(friend.uid));
+
 
   const [selectedFriend, setSelectedFriend] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -35,6 +38,10 @@ function Home() {
   console.log('user', user)
   console.log('selectedFriend', selectedFriend)
   console.log('users', users)
+
+  useEffect( () => {
+    setMyFriendsList(user?.friends)
+  },[user])
 
   useEffect(() => {
     if (loading) return;
@@ -55,7 +62,7 @@ function Home() {
 	},[])
 
   useEffect( () => {
-    user && (user.friends.length > 0 ? setSelectedFriend(users && users[0]) : setSelectedFriend(user))
+    user && (myFriends?.length > 0 ? setSelectedFriend(myFriendsList[0]) : setSelectedFriend(user))
   },[users])
 
   return (

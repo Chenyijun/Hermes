@@ -2,7 +2,7 @@ import React from "react";
 import { AvatarBubble, DefaultAvatarBubble } from './chatComponents'
 
 const Avatar = ({ user }) => {
-    const initials = user ? user.firstName.charAt(0) + user.lastName.charAt(0) : "";
+    const initials = user ? user.firstName?.charAt(0) + user.lastName?.charAt(0) : "";
 
     return (
       <div>

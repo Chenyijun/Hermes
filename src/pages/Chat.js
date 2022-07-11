@@ -49,11 +49,13 @@ const Chat = ({ user, users, messages, messageCollection, timeDelay, friend}) =>
 
     return (
       <ChatWrapper>
-        {user && messages && messages.map(message => {
+        {user && messages && messages.map((message, i) => {
           const sender = message && users && users.find(user => {
             return user.uid === message.uid
           })
           const sending = message.uid === user.uid
+          const lastMessage = i === messages.length - 1
+          console.log(lastMessage)
           return checkFriendFilterMsg(friend?.uid, message)
             && <Message key={message.id} sender={sender} text={message.text} message={message} sending={sending} recieveTime={message.sentAt} timeStamp={message.createdAt} currDate={currDate}/>
         })}

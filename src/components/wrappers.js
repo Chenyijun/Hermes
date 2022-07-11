@@ -40,6 +40,7 @@ export const UserListWrapper = styled.div`
     display: flex;
     flex-direction: column;
     grid-area: sidenav;
+    z-index: 2;
 `
 
 export const ChatWrapper = styled.div`
@@ -53,5 +54,5 @@ export const BodyWrapper = styled.div`
     padding: 1rem;
     grid-area: body;
     background: black;
-    overflow: scroll;
+    overflow-y: auto;
 `

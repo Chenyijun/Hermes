@@ -1,14 +1,15 @@
 import React from "react";
-import { ActivityCardWrapper, Tag, CardLink } from './activityComponents'
+import { ActivityCardWrapper, ActivityCardBanner, CardLink, ActivityCardBody } from './activityComponents'
 
 
-const ActivityCard = ({ activity }) => {
+const ActivityCard = ({ activity, yourTurn, started }) => {
     return (
       <CardLink to={`/activity/${activity.id}`} key={activity.id}> 
-        <ActivityCardWrapper>
-          <p><b>{activity.title || 'activity title'}</b></p>
-          <p>{activity.description || 'activity description'}</p>
-          {activity.tags.map(tag => <Tag key={tag}>{tag}</Tag>)}
+        <ActivityCardWrapper started={started}>
+          <ActivityCardBanner yourTurn={yourTurn} started={started}><p>{yourTurn ? "Your Turn" : "Their Turn"}</p></ActivityCardBanner>
+          <ActivityCardBody>
+            <p>{activity.title || 'activity title'}</p>
+          </ActivityCardBody>
       </ActivityCardWrapper>
       </CardLink>
     );

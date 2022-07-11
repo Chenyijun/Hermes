@@ -7,6 +7,8 @@ export const TopNavBar = styled.nav`
   grid-area: topnav;
   align-items: center;
   background: black;
+  z-index: 1;
+  filter: drop-shadow(0px 4px 40px rgba(87, 48, 243, 0.6));
 `
 
 export const ThreeTabs = styled.div`

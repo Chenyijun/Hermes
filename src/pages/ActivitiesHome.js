@@ -5,11 +5,12 @@ import {collection, query, orderBy, onSnapshot, where} from 'firebase/firestore'
 import ActivityCard from "../components/ActivityCard";
 import { ActivityFlex} from "../components/activityComponents"
 import { useCollectionData} from "react-firebase-hooks/firestore";
+import { Header2 } from "../components/mainComponents"
 
 function ActivitiesHome({user, selectedFriend}) {
   const [allActivities, setAllActivities] = useState([])
   const userActivitiesRef = collection(db, 'user-activities');
-  const activitiesQuery = query(userActivitiesRef, orderBy("startDate"), where('users', 'array-contains', [selectedFriend.uid, user.uid]));
+  const activitiesQuery = query(userActivitiesRef, orderBy("startDate"), where('users', 'array-contains', [selectedFriend?.uid, user?.uid]));
   const [userActivities] = useCollectionData(activitiesQuery);
 
   /* Get all activities from firestore in realtime */
@@ -25,11 +26,11 @@ function ActivitiesHome({user, selectedFriend}) {
 
   return (
     <SimpleWrapper>
-      <h2>Our Activities</h2>
+      <Header2>Active Sparks</Header2>
       <ActivityFlex>
         {userActivities?.map(activity => (<p>{activity.name}</p>))}
       </ActivityFlex>
-      <h2>All Activities</h2>
+      <Header2>Library</Header2>
       <ActivityFlex>
         {allActivities.map(activity => ( <ActivityCard key={activity.id} activity={activity.data} />))}
       </ActivityFlex>
