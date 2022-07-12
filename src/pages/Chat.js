@@ -4,6 +4,8 @@ import { auth } from "../firebase";
 import {ChatWrapper} from '../components/wrappers'
 import { ChatForm, ChatInput, SendButton } from "../components/chatComponents";
 import Message from "../components/Message"
+import moment from 'moment'
+
 
 
 const Chat = ({ user, users, messages, messageCollection, timeDelay, friend}) => {
@@ -38,12 +40,20 @@ const Chat = ({ user, users, messages, messageCollection, timeDelay, friend}) =>
     }
 
     const checkFriendFilterMsg = (friendUid, message) => {
-      if (
-        (message.uid === user.uid) && (message.recipientUid === friendUid)
-        || (message.uid === friendUid) && (message.recipientUid === user.uid))
-        {
+      if ((message.uid === user.uid) && (message.recipientUid === friendUid)){
+        console.log("I'm the sender")
         return true
       }
+      if ((message.uid === friendUid) && (message.recipientUid === user.uid)){
+        console.log('friend is sender')
+        console.log('sent', (moment(message.sentAt.toDate()) < moment(currDate)))
+        return moment(message.sentAt.toDate()) < moment(currDate) ? true : false
+      }
+      //   ((message.uid === user.uid) && (message.recipientUid === friendUid) && (moment(message.sentAt.toDate()) < moment(currDate)))
+      //   || (message.uid === friendUid) && (message.recipientUid === user.uid))
+      //   {
+      //   return true
+      // }
       return false
     }
 
