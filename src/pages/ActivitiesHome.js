@@ -6,6 +6,7 @@ import ActivityCard from "../components/ActivityCard";
 import { ActivityFlex} from "../components/activityComponents"
 import { useCollectionData} from "react-firebase-hooks/firestore";
 import { Header2 } from "../components/mainComponents"
+import { ActivitiesWrapper} from "../components/wrappers"
 
 function ActivitiesHome({user, selectedFriend}) {
   const [allActivities, setAllActivities] = useState([])
@@ -31,9 +32,9 @@ function ActivitiesHome({user, selectedFriend}) {
         {userActivities?.map(activity => (<p>{activity.name}</p>))}
       </ActivityFlex>
       <Header2>Library</Header2>
-      <ActivityFlex>
+      <ActivitiesWrapper>
         {allActivities.map(activity => ( <ActivityCard key={activity.id} activity={activity.data} />))}
-      </ActivityFlex>
+      </ActivitiesWrapper>
     </SimpleWrapper>
     );
   }

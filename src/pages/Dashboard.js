@@ -1,8 +1,10 @@
 import React from "react";
 import { Header2, WhiteText, Stats } from "../components/mainComponents";
-import { SimpleWrapper } from "../components/wrappers";
+import { ActivitiesWrapper, SimpleWrapper } from "../components/wrappers";
+import HighlightCard from "../components/HighlightCard";
+import ActivityCard from "../components/ActivityCard";
 
-function Dashboard({user, selectedFriend}) {
+function Dashboard({selectedFriend}) {
 
   return (
     <SimpleWrapper>
@@ -13,9 +15,12 @@ function Dashboard({user, selectedFriend}) {
         <WhiteText>X Memories Created</WhiteText>
       </Stats>
       <Header2>Activity Log</Header2>
-      <WhiteText>No Activities at the moment, head to spark to start one!</WhiteText>
+      <ActivitiesWrapper>
+        <ActivityCard activity={{id: 'QxzY3tEVFLZVHDCDTpI1', title: 'Create a journal together'}} yourTurn started />
+        <ActivityCard activity={{id: 'rJnR2XbH8yQm86LfP3sh', title: 'Character Chat'}} yourTurn={false} started />
+      </ActivitiesWrapper>
       <Header2>Highlights</Header2>
-      <WhiteText>Go create some memories :)</WhiteText>
+      <HighlightCard title="Created a Song Together" banner="Month 2" friendName={selectedFriend?.firstName}/>
     </SimpleWrapper>
   );
 }

@@ -5,8 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 import {auth, db} from '../firebase'
 import {doc, getDoc, collection, query, orderBy, onSnapshot} from 'firebase/firestore'
-import ActivityCard from "../components/ActivityCard";
-import { ActivityFlex} from "../components/activityComponents"
 import { useCollectionData} from "react-firebase-hooks/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import UserList from "./UserList"
@@ -15,6 +13,7 @@ import ChatHome from "./ChatHome";
 import ActivitiesHome from "./ActivitiesHome";
 import Profile from "./Profile";
 import Dashboard from "./Dashboard";
+import Admin from "./Admin";
 
 
 function Home() {
@@ -69,12 +68,13 @@ function Home() {
   return (
     <HomeWrapper profile={navState === 'profile'}>
       <UserList user={user} users={users} db={db} selectedFriend={selectedFriend} setSelectedFriend={setSelectedFriend} navState={navState} setNavState={setNavState}/>
-      {isProfile && <Profile user={user} />}
-      {!isProfile && <TopNavBar friend={selectedFriend} navState={navState} setNavState={setNavState} timeDelay={timeDelay} setTimeDelay={setTimeDelay} admin={user?.admin}/>}
-      {!isProfile && <BodyWrapper>
+        {isProfile && <Profile user={user} />}
+        {!isProfile && <TopNavBar friend={selectedFriend} navState={navState} setNavState={setNavState} timeDelay={timeDelay} setTimeDelay={setTimeDelay} admin={user?.admin}/>}
+        {!isProfile && <BodyWrapper>
         {navState === 'dashboard' && <Dashboard user={user} selectedFriend={selectedFriend} />}
         {navState === 'messages' && <ChatHome user={user} selectedFriend={selectedFriend} users={users} timeDelay={timeDelay} />}
         {navState === 'sparks' && <ActivitiesHome user={user} selectedFriend={selectedFriend} />}
+        {user?.isAdmin && navState === 'admin' && <Admin user={user} users={users} />}
       </BodyWrapper>}
     </HomeWrapper>
     );

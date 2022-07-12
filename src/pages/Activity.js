@@ -24,9 +24,9 @@ const Activity = () => {
         <SimpleWrapper>
           <button onClick={()=> navigate(-1)}>Back</button>
           <h1>{activity.title || 'activity title'}</h1>
-          <h2>{activity.description || 'activity description'}</h2>
+          {/* <h2>{activity.description || 'activity description'}</h2>
           <h3>Instructions</h3>
-          <p>{activity.instructions || `activity instructions`}</p>
+          <p>{activity.instructions || `activity instructions`}</p> */}
         </SimpleWrapper>
       </MainWrapper>
     );
