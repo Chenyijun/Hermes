@@ -14,6 +14,7 @@ import { onAuthStateChanged } from '@firebase/auth';
 import ChatHome from "./ChatHome";
 import ActivitiesHome from "./ActivitiesHome";
 import Profile from "./Profile";
+import Dashboard from "./Dashboard";
 
 
 function Home() {
@@ -71,6 +72,7 @@ function Home() {
       {isProfile && <Profile user={user} />}
       {!isProfile && <TopNavBar friend={selectedFriend} navState={navState} setNavState={setNavState} timeDelay={timeDelay} setTimeDelay={setTimeDelay} admin={user?.admin}/>}
       {!isProfile && <BodyWrapper>
+        {navState === 'dashboard' && <Dashboard user={user} selectedFriend={selectedFriend} />}
         {navState === 'messages' && <ChatHome user={user} selectedFriend={selectedFriend} users={users} timeDelay={timeDelay} />}
         {navState === 'sparks' && <ActivitiesHome user={user} selectedFriend={selectedFriend} />}
       </BodyWrapper>}

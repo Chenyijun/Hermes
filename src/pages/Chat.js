@@ -9,10 +9,18 @@ import moment from 'moment'
 
 
 const Chat = ({ user, users, messages, messageCollection, timeDelay, friend}) => {
-
     const [formValue, setFormValue] = useState('');
     const [currDate, setCurrDate] = useState(new Date());
-    const drop = useRef()
+
+    const messagesEndRef = useRef(null)
+
+    const scrollToBottom = () => {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+    }
+  
+    useEffect(() => {
+      scrollToBottom()
+    }, [messages]);
 
     useEffect(() => {
       var timer = setInterval(()=> setCurrDate(new Date()), 1000)
@@ -35,25 +43,16 @@ const Chat = ({ user, users, messages, messageCollection, timeDelay, friend}) =>
             recipientUid: friend.uid || '',
         })
         setFormValue('')
-
-        drop.current.scrollIntoView({ behavior: 'smooth'});
+        // drop.current.scrollIntoView({ behavior: 'smooth'});
     }
 
     const checkFriendFilterMsg = (friendUid, message) => {
       if ((message.uid === user.uid) && (message.recipientUid === friendUid)){
-        console.log("I'm the sender")
         return true
       }
       if ((message.uid === friendUid) && (message.recipientUid === user.uid)){
-        console.log('friend is sender')
-        console.log('sent', (moment(message.sentAt.toDate()) < moment(currDate)))
         return moment(message.sentAt.toDate()) < moment(currDate) ? true : false
       }
-      //   ((message.uid === user.uid) && (message.recipientUid === friendUid) && (moment(message.sentAt.toDate()) < moment(currDate)))
-      //   || (message.uid === friendUid) && (message.recipientUid === user.uid))
-      //   {
-      //   return true
-      // }
       return false
     }
 
@@ -74,7 +73,7 @@ const Chat = ({ user, users, messages, messageCollection, timeDelay, friend}) =>
         <SendButton type="submit">Submit</SendButton>
         </ChatForm>
         {/* Forced scroll */}
-        <div ref={drop}></div>
+        <div ref={messagesEndRef} />
       </ChatWrapper>
     );
   };
