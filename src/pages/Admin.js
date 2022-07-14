@@ -5,7 +5,7 @@ import { collection, query, orderBy, onSnapshot} from 'firebase/firestore'
 import {db} from '../firebase'
 
 
-function Admin({user, selectedFriend}) {
+function Admin({user, users}) {
   const [activity, setActivity] = useState(null)
   const [person1, setPerson1] = useState(null)
   const [person2, setPerson2] = useState(null)
@@ -26,6 +26,10 @@ function Admin({user, selectedFriend}) {
   //   setNewFriend(event.target.value);
   // }
 
+  // Create a box in DB
+  // Highlight box
+  // use user_activities
+
   return (
     <SimpleWrapper>
       <p>Add activities</p>
@@ -45,6 +49,38 @@ function Admin({user, selectedFriend}) {
               </MenuItem>
             )
           })}
+        </Select>
+        <InputLabel>Select Person 1</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={person1}
+          label="Person 1"
+          onChange={(e) => setPerson1(e.target.value)}
+        >
+          {users.map(user => {
+            return (
+              <MenuItem key={user.uid} value={user}>
+                {user.firstName + ' ' + user.lastName}
+              </MenuItem>
+            )
+          })}
+        <InputLabel>Select Person 2</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={person2}
+          label="Person 2"
+          onChange={(e) => setPerson2(e.target.value)}
+        >
+          {users.map(user => {
+            return (
+              <MenuItem key={user.uid} value={user}>
+                {user.firstName + ' ' + user.lastName}
+              </MenuItem>
+            )
+          })}
+        </Select>
         </Select>
       </FormControl>
 

@@ -51,7 +51,7 @@ const Chat = ({ user, users, messages, messageCollection, timeDelay, friend}) =>
         return true
       }
       if ((message.uid === friendUid) && (message.recipientUid === user.uid)){
-        return moment(message.sentAt.toDate()) < moment(currDate) ? true : false
+        return moment(message.sentAt.toDate()) <= moment(currDate) ? true : false
       }
       return false
     }
