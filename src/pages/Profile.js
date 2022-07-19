@@ -6,6 +6,8 @@ import { ref, getDownloadURL, uploadBytes, deleteObject } from 'firebase/storage
 import { getDoc, doc, updateDoc} from '@firebase/firestore';
 import { updateProfile, onAuthStateChanged } from '@firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import { logOut } from '../firebase';
+
 
 const Profile = ({user}) => {
 	const [img, setImg] = useState('')
@@ -77,6 +79,7 @@ return(
 				<p>{user?.firstName || 'first name'}</p>
 				<p>{user?.lastName || 'last name'}</p>
 				<p>{user?.email || 'email'}</p>
+				<button onClick={logOut}>Logout</button>
 			</div>)
 		}
  </>

@@ -22,7 +22,7 @@ const Activity = () => {
     return (
       <MainWrapper>
         <SimpleWrapper>
-          <button onClick={()=> navigate(-1)}>Back</button>
+          <button onClick={()=> navigate("../home")}>Back</button>
           <h1>{activity.title || 'activity title'}</h1>
           {/* <h2>{activity.description || 'activity description'}</h2>
           <h3>Instructions</h3>

@@ -16,7 +16,7 @@ import Dashboard from "./Dashboard";
 import Admin from "./Admin";
 
 
-function Home() {
+function Home({props}) {
   const navigate = useNavigate();
   const [authUser, loading ] = useAuthState(auth);
   const [user, setUser] = useState(null);
@@ -31,14 +31,8 @@ function Home() {
 
   const [selectedFriend, setSelectedFriend] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [navState, setNavState] = useState('sparks')
-
-  const isDashboard = selectedFriend?.uid === user?.uid
-  console.log('dashboard', isDashboard)
-  // console.log('authUser', authUser)
-  console.log('user', user)
-  console.log('selectedFriend', selectedFriend)
-  console.log('users', users)
+  const [navState, setNavState] = useState(props?.location.state || 'sparks')
+  const isDashboard = selectedFriend === null || (selectedFriend?.uid === user?.uid)
 
   useEffect( () => {
     setMyFriendsList(user?.friends)
@@ -69,9 +63,8 @@ function Home() {
   return (
     <HomeWrapper noTopNav={isDashboard}>
       <UserList user={user} users={users} db={db} selectedFriend={selectedFriend} setSelectedFriend={setSelectedFriend} navState={navState} setNavState={setNavState}/>
-        {/* {isProfile && <Profile user={user} />} */}
-        {!isDashboard && <TopNavBar friend={selectedFriend} navState={navState} setNavState={setNavState} timeDelay={timeDelay} setTimeDelay={setTimeDelay} admin={user?.admin}/>}
-        <BodyWrapper>
+      {!isDashboard && <TopNavBar friend={selectedFriend} navState={navState} setNavState={setNavState} timeDelay={timeDelay} setTimeDelay={setTimeDelay} admin={user?.admin}/>}
+      <BodyWrapper>
         {isDashboard && <Dashboard user={user} selectedFriend={selectedFriend} />}
         {navState === 'messages' && <ChatHome user={user} selectedFriend={selectedFriend} users={users} timeDelay={timeDelay} />}
         {navState === 'sparks' && <ActivitiesHome user={user} selectedFriend={selectedFriend} />}

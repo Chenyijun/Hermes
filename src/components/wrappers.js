@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { darkPurple } from '../constants'
+import { darkerGray } from '../constants'
 
 export const MainFriendsListWrapper = styled.div`
     display: grid;
@@ -31,7 +31,7 @@ export const SideNav = styled.nav`
 `
 
 export const UserListWrapper = styled.div`
-    background: ${darkPurple};
+    background: ${darkerGray};
     width: 100px;
     box-sizing: border-box;
     padding: 1rem;
@@ -69,4 +69,9 @@ export const DashboardWrapper = styled.div`
     height: 100%;
     width: 100%;
     background: black;
+`
+
+export const BoxActivitiesWrapper = styled(ActivitiesWrapper)`
+    padding: 2rem 0;
+
 `

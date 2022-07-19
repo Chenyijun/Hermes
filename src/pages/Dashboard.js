@@ -6,6 +6,7 @@ import HighlightCard from "../components/HighlightCard";
 import ActivityCard from "../components/ActivityCard";
 import Avatar from "../components/Avatar";
 import Profile from "./Profile";
+import { StatButton } from "../components/mainComponents"
 
 
 function Dashboard({user}) {
@@ -30,8 +31,7 @@ function Dashboard({user}) {
         <div>
            <Stats>
           <WhiteText>Overall, You Have:</WhiteText>
-          <WhiteText>12 Completed Sparks</WhiteText>
-          <WhiteText>5 Created Memories</WhiteText>
+          <StatButton>12 Completed Sparks</StatButton>
         </Stats>
         <Header2>Sparks Log</Header2>
         <ActivitiesWrapper>

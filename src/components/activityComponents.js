@@ -73,3 +73,20 @@ export const LibraryFilterWrapper = styled.div`
     padding-right: 1rem;
   }
 `
+
+export const BoxHeader = styled.h3`
+  color: white;
+  font-size: 24px;
+  font-family: "Poppins", sans-serif; ;
+  font-weight: 600;
+  text-align: center;
+`
+
+export const WhiteText = styled.p`
+  color: white;
+  font-family: "Poppins", sans-serif; ;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 21px;
+`

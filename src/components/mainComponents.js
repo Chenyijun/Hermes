@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { periwinkle } from '../constants'
+import { periwinkle, accentYellow } from '../constants'
 
 
 export const Header2 = styled.h2`
@@ -11,11 +11,49 @@ export const Header2 = styled.h2`
 export const WhiteText = styled.p`
   color: white;
   font-family: "Poppins", sans-serif; 
+  font-size: 1rem;
 `
 
 export const Stats = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
+`
+
+export const YellowButton = styled.button`
+  width: 130px;
+  height: 50px;
+  background: ${accentYellow};
+  border-radius: 5px;
+  font-family: 'Poppins', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 27px;
+  cursor: pointer;
+  margin: 1rem;
+`
+
+export const IconButton = styled.button`
+  cursor: pointer;
+  position: fixed;
+  top: 20px;
+  right: 20px; 
+  background: none;
+  border: 0;
+`
+
+export const StatButton = styled.button`
+  border: 1px solid ${accentYellow};
+  border-radius: 10px;
+  font-family: 'Poppins', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 21px;
+  color: white;
+  background: black;
+  padding: .5rem 1rem;
+  width: fit-content;
 `
 
 // HighlightCard

@@ -5,7 +5,6 @@ import { doc, updateDoc} from '@firebase/firestore';
 import { db } from '../firebase';
 import Avatar from "../components/Avatar";
 import { Modal, Box, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
-import { logOut } from '../firebase';
 
 
 const UserList = ({ user, users, setSelectedFriend, selectedFriend, setNavState, navState}) => {
@@ -46,7 +45,6 @@ const UserList = ({ user, users, setSelectedFriend, selectedFriend, setNavState,
 				<Avatar />
 				<UserButtonText>Add Friend</UserButtonText>
 			</UserButton>
-			<button onClick={logOut}>Logout</button>
 			<UserModal openModal={openModal} setOpenModal={setOpenModal} allUsers={allUsers} user={user} myFriendsList={myFriendsList}/>
 		</UserListWrapper>
 	);

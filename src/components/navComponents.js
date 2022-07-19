@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { accentOrange, darkGray } from '../constants'
+import { offBlack, darkerGray, accentYellow, offWhite } from '../constants'
 
 export const TopNavBar = styled.nav`
   display: flex;
@@ -8,27 +8,31 @@ export const TopNavBar = styled.nav`
   align-items: center;
   background: black;
   z-index: 1;
-  filter: drop-shadow(0px 4px 40px rgba(87, 48, 243, 0.6));
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url('https://firebasestorage.googleapis.com/v0/b/hermes-95b99.appspot.com/o/assets%2Flandscape.png?alt=media&token=94b1c28f-2495-4720-9aeb-f89c590f3d9c') 
 `
 
 export const TwoTabs = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  width: 100%;
+  grid-gap: 10rem;
 `
 
 export const NavButton = styled.button`
   height: 100%;
   width: 100%;
-  color: ${props => props.active ? accentOrange : darkGray};
-  background: black;
+  color: ${props => props.active ? offBlack : offWhite};
+  background: ${props => props.active ? 'transparent' : offBlack};
   border: none;
-  padding: 1rem;
+  padding: .5rem 1rem;
   font-weight: 600;
   font-size: 20px;
   font-family: "Poppins", sans-serif; 
   box-sizing: border-box;
   cursor: pointer;
+  width: fit-content;
+  border-radius: 5px;
 `
 
 export const NameWrapper = styled.div`
@@ -40,7 +44,7 @@ export const NameWrapper = styled.div`
 
 
 export const NameHeader = styled.h1`
-  color: white;
+  color: ${props => props.black ? 'black' : 'white'};
   font-weight: 600;
   font-size: 20px;
   font-family: "Poppins", sans-serif; 
@@ -58,7 +62,7 @@ export const DashHeaderWrapper = styled.div`
 // User List
 
 export const UserButton = styled.button`
-  background: ${props => props.selected ? `white` : 'none'};
+  background: ${props => props.selected ? `${accentYellow}` : 'none'};
   border: none;
   color: ${props => props.selected ? 'black' : 'white'};
   display: flex;

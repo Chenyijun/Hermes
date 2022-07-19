@@ -3,20 +3,29 @@ import { SimpleWrapper } from "../components/wrappers"
 import {db} from '../firebase'
 import {collection, query, orderBy, onSnapshot, where} from 'firebase/firestore'
 import ActivityCard from "../components/ActivityCard";
-import { ActivityFlex, LibraryFilterWrapper} from "../components/activityComponents"
+import { ActivityFlex, LibraryFilterWrapper, BoxHeader, WhiteText} from "../components/activityComponents"
+import { YellowButton, IconButton } from "../components/mainComponents";
 import { useCollectionData} from "react-firebase-hooks/firestore";
 import { Header2 } from "../components/mainComponents"
-import { ActivitiesWrapper} from "../components/wrappers"
+import { ActivitiesWrapper, BoxActivitiesWrapper} from "../components/wrappers"
 import { Modal, Box, Select, MenuItem, FormControl, InputLabel, TextField } from "@mui/material";
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
 function ActivitiesHome({user, selectedFriend}) {
   const [allActivities, setAllActivities] = useState([])
   const [openModal, setOpenModal] = useState(selectedFriend ? true : false)
   const [sparkBoxes, setSparkBoxes] = useState(null)
   const [userActivities, setUserActivities] = useState([])
-  const [filterSelect, setFilterSelect] = useState('name')
+  const [filterSelect, setFilterSelect] = useState('')
   const [sort, setSort] = useState('your_turn')
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
+  
+  useEffect(() => {
+    if (selectedFriend){
+      setIsLoading(false)
+    }
+  });
 
   const handleFilter = (event) => {
     setFilterSelect(event.target.value);
@@ -24,17 +33,6 @@ function ActivitiesHome({user, selectedFriend}) {
   const handleSort = (event) => {
     setSort(event.target.value);
   }
-
-
-  // const userActivitiesRef = collection(db, 'user_activities');
-  // const activitiesQuery = selectedFriend && user && query(userActivitiesRef, orderBy("startDate"), where('users', 'array-contains', [selectedFriend?.uid, user?.uid]));
-  // const [userActivities] = useCollectionData(activitiesQuery);
-
-  // const boxesRef = collection(db, 'boxes')
-  // const boxesQuery = user && selectedFriend && query(boxesRef, orderBy("sentTime"))
-  // // const boxesQuery = user && selectedFriend && query(boxesRef, orderBy("sentTime"), where('users', 'array-contains', [selectedFriend?.uid, user?.uid]))
-  // const [boxes] = useCollectionData(boxesQuery);
-
 
   /* Get all activities from firestore in realtime */
   useEffect(() => {
@@ -47,7 +45,7 @@ function ActivitiesHome({user, selectedFriend}) {
     })
   })
 
-  /* Get all activities from firestore in realtime */
+  /* Get all boxes from firestore in realtime */
   useEffect(() => {
     const q = query(collection(db, 'boxes'), orderBy("sentTime"))
     onSnapshot(q, (querySnapshot) => {
@@ -61,7 +59,7 @@ function ActivitiesHome({user, selectedFriend}) {
     })
   })
 
-  /* Get all activities from firestore in realtime */
+  /* Get all user_activities from firestore in realtime */
   useEffect(() => {
     const q = query(collection(db, 'user_activities'))
     onSnapshot(q, (querySnapshot) => {
@@ -76,6 +74,8 @@ function ActivitiesHome({user, selectedFriend}) {
 
   return (
     <SimpleWrapper>
+      {isLoading ? (<div>Loading</div>) :
+      <>
       <Header2>Active Sparks</Header2>
         <ActivitiesWrapper>
           {/* {sparkBoxes?.map(box => {
@@ -133,6 +133,7 @@ function ActivitiesHome({user, selectedFriend}) {
         {/* {allActivities.map(activity => ( <ActivityCard key={activity.id} activity={activity.data} />))} */}
       </ActivitiesWrapper>
       <BoxModal openModal={openModal} setOpenModal={setOpenModal} selectedFriend={selectedFriend} sparkBoxes={sparkBoxes} userActivities={userActivities} allActivities={allActivities}/>
+      </>}
     </SimpleWrapper>
     );
   }
@@ -147,28 +148,33 @@ function ActivitiesHome({user, selectedFriend}) {
       aria-describedby="Box of activities"
     >
       <Box sx={{
-          background: 'white',
-          transform: 'translate(5%, 30%)',
+          background: 'black',
+          transform: 'translate(3%, 3%)',
           width: '90%',
-          height: '500px',
+          height: '90%',
           padding: '1rem',
+          paddingTop: '5%',
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center'
+          alignItems: 'center',
+          borderRadius: '4px'
         }}>
-          <p>Incoming Box Drop</p>
-          <p>The following sparks are based on the interests you and {selectedFriend?.firstName} both indicated.</p>
-          <ActivitiesWrapper>
+          <IconButton onClick={() => setOpenModal(false)}>
+           <CloseRoundedIcon style={{ color: '#fff', height: '45px', width: '45px' }} />
+          </IconButton>
+          <BoxHeader>Incoming Box Drop</BoxHeader>
+          <WhiteText>The following sparks are based on the interests you and {selectedFriend?.firstName} both indicated.</WhiteText>
+          <BoxActivitiesWrapper>
           {sparkBoxes?.map(box => {
             const userActivity = userActivities.find(ua => ua.id === box.user_activitiesID)
             const activity = allActivities.find(a => a.id === userActivity?.activitiesID)
-            return (<div>
-              <ActivityCard key={box?.user_activitiesID} activity={activity?.data} />
-              <p>{userActivity?.why}</p>
+            return (<div key={box?.user_activitiesID} >
+              <ActivityCard activity={activity?.data} />
+              <WhiteText>{userActivity?.why}</WhiteText>
               </div>)
           })}
-        </ActivitiesWrapper>
-          <button onClick={() => setOpenModal(false)}>Let's Go</button>
+        </BoxActivitiesWrapper>
+          <YellowButton onClick={() => setOpenModal(false)}>Let's Go</YellowButton>
       </Box>
     </Modal>
     )
