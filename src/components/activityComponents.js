@@ -63,3 +63,13 @@ export const ActivityFlex = styled.div`
   display: flex;
   flex-direction: row;
 `
+
+export const LibraryFilterWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding: 1rem 0;
+
+  h2 {
+    padding-right: 1rem;
+  }
+`

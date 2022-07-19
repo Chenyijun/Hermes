@@ -1,9 +1,9 @@
 import React from "react";
 import Avatar from "../components/Avatar";
-import { NavButton, TopNavBar, ThreeTabs, NameWrapper, NameHeader } from "../components/navComponents";
+import { NavButton, TopNavBar, TwoTabs, NameWrapper, NameHeader } from "../components/navComponents";
 
 const TopNav = ({friend, navState, setNavState, timeDelay, setTimeDelay, admin}) =>{
-  console.log('FRIEND', friend)
+  console.log('navState', navState)
   return (
     <TopNavBar>
       <NameWrapper>
@@ -15,11 +15,10 @@ const TopNav = ({friend, navState, setNavState, timeDelay, setTimeDelay, admin})
             <button onClick={() => setTimeDelay(!timeDelay)}>{timeDelay ? 'Turn off time delay' : 'Turn on time delay'}</button>
           </div>}
       </NameWrapper>
-      <ThreeTabs>
-        <NavButton onClick={()=>setNavState('dashboard')} active={navState==='dashboard'}>Dashboard</NavButton>
+      <TwoTabs>
         <NavButton onClick={()=>setNavState('sparks')} active={navState==='sparks'}>Sparks</NavButton>
         <NavButton onClick={()=>setNavState('messages')} active={navState==='messages'}>Messages</NavButton>
-      </ThreeTabs>
+      </TwoTabs>
     </TopNavBar>
   );
 }

@@ -1,27 +1,50 @@
-import React from "react";
+import React, {useState} from "react";
 import { Header2, WhiteText, Stats } from "../components/mainComponents";
-import { ActivitiesWrapper, SimpleWrapper } from "../components/wrappers";
+import { DashboardWrapper, ActivitiesWrapper, SimpleWrapper } from "../components/wrappers";
+import { DashHeaderWrapper, NameWrapper, NameHeader } from "../components/navComponents"
 import HighlightCard from "../components/HighlightCard";
 import ActivityCard from "../components/ActivityCard";
+import Avatar from "../components/Avatar";
+import Profile from "./Profile";
 
-function Dashboard({selectedFriend}) {
+
+function Dashboard({user}) {
+  const [isSettings, setIsSettings] = useState(false)
 
   return (
-    <SimpleWrapper>
-      <Stats>
-        <WhiteText>You and {selectedFriend?.firstName} Have...</WhiteText>
-        <WhiteText>X Completed Activities</WhiteText>
-        <WhiteText>X Opened Boxes</WhiteText>
-        <WhiteText>X Memories Created</WhiteText>
-      </Stats>
-      <Header2>Activity Log</Header2>
-      <ActivitiesWrapper>
-        <ActivityCard activity={{id: 'QxzY3tEVFLZVHDCDTpI1', title: 'Create a journal together'}} yourTurn started />
-        <ActivityCard activity={{id: 'rJnR2XbH8yQm86LfP3sh', title: 'Character Chat'}} yourTurn={false} started />
-      </ActivitiesWrapper>
-      <Header2>Highlights</Header2>
-      <HighlightCard title="Created a Song Together" banner="Month 2" friendName={selectedFriend?.firstName}/>
-    </SimpleWrapper>
+    <DashboardWrapper>
+      <DashHeaderWrapper>
+      <div></div>
+      <NameWrapper>
+          <Avatar user={user} />
+          <NameHeader>
+            {isSettings ? 'My Settings' : 'My Dashboard'}
+          </NameHeader>
+      </NameWrapper>
+      <button onClick={() => setIsSettings(!isSettings)}>
+        {isSettings ? 'Close' : 'Settings'}
+      </button>
+      </DashHeaderWrapper>
+      <SimpleWrapper>
+        {isSettings ? <Profile user={user} /> : 
+        <div>
+           <Stats>
+          <WhiteText>Overall, You Have:</WhiteText>
+          <WhiteText>12 Completed Sparks</WhiteText>
+          <WhiteText>5 Created Memories</WhiteText>
+        </Stats>
+        <Header2>Sparks Log</Header2>
+        <ActivitiesWrapper>
+          <ActivityCard activity={{id: 'QxzY3tEVFLZVHDCDTpI1', title: 'Create a journal together'}} yourTurn started />
+          <ActivityCard activity={{id: 'rJnR2XbH8yQm86LfP3sh', title: 'Character Chat'}} yourTurn={false} started />
+        </ActivitiesWrapper>
+        <Header2>Conversation Log</Header2>
+        <Header2>Memories</Header2>
+        <HighlightCard title="Created a Song Together" banner="Month 2" friendName={'test'}/>
+        </div>
+        }
+      </SimpleWrapper>
+    </DashboardWrapper>
   );
 }
 export default Dashboard;

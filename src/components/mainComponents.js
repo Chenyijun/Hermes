@@ -20,8 +20,8 @@ export const Stats = styled.div`
 
 // HighlightCard
 export const HighlightCardWrapper = styled.div`
-  width: 302px;
-  height: 336px;
+  width: 230px;
+  height: 256px;
   border: 1px solid #000000;
   filter: drop-shadow(0px 4px 40px rgba(87, 48, 243, 0.6));
   border-radius: 5px;

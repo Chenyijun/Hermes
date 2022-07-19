@@ -4,11 +4,11 @@ import { ActivityCardWrapper, ActivityCardBanner, CardLink, ActivityCardBody } f
 
 const ActivityCard = ({ activity, yourTurn, started }) => {
     return (
-      <CardLink to={`/activity/${activity.id}`} key={activity.id}> 
+      <CardLink to={`/activity/${activity?.id}`} key={activity?.id}> 
         <ActivityCardWrapper started={started}>
           <ActivityCardBanner yourTurn={yourTurn} started={started}><p>{yourTurn ? "Your Turn" : "Their Turn"}</p></ActivityCardBanner>
           <ActivityCardBody>
-            <p>{activity.title || 'activity title'}</p>
+            <p>{activity?.title || 'activity title'}</p>
           </ActivityCardBody>
       </ActivityCardWrapper>
       </CardLink>

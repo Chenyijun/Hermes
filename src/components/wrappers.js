@@ -15,7 +15,7 @@ export const HomeWrapper = styled.div`
     display: grid;
     grid-template-columns: 100px auto;
     grid-template-rows: minmax(auto, 145px) auto;
-    grid-template-areas: "sidenav topnav" "sidenav body";
+    grid-template-areas: ${props => props.noTopNav ? `"sidenav body" "sidenav body"` : `"sidenav topnav" "sidenav body"`};
     height: 100vh;
 `
 
@@ -61,4 +61,12 @@ export const ActivitiesWrapper = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-gap: 1rem;
+`
+
+export const DashboardWrapper = styled.div`
+    display: grid;
+    grid-template-rows: 110px auto;
+    height: 100%;
+    width: 100%;
+    background: black;
 `

@@ -11,9 +11,9 @@ export const TopNavBar = styled.nav`
   filter: drop-shadow(0px 4px 40px rgba(87, 48, 243, 0.6));
 `
 
-export const ThreeTabs = styled.div`
+export const TwoTabs = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   width: 100%;
 `
 
@@ -45,6 +45,14 @@ export const NameHeader = styled.h1`
   font-size: 20px;
   font-family: "Poppins", sans-serif; 
   box-sizing: border-box;
+`
+
+export const DashHeaderWrapper = styled.div`
+  display: grid;
+  grid-template-columns: .5fr .75fr 1fr; //fix this later
+  justify-content: center;
+  align-items: center;
+  justify-items: flex-end;
 `
 
 // User List

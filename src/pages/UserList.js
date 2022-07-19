@@ -13,10 +13,6 @@ const UserList = ({ user, users, setSelectedFriend, selectedFriend, setNavState,
 	const [myFriendsList, setMyFriendsList] = useState([])
 	const allUsers = user && users?.filter(friend => (friend.uid !== user.uid) && !myFriendsList?.includes(friend.uid));
 	const myFriends = myFriendsList && users?.filter(friend => myFriendsList.includes(friend.uid));
-	// console.log("users", users)
-	// console.log("friends", friends)
-	console.log('friends list', myFriendsList)
-	console.log("my friends", myFriends)
 
 	useEffect( () => {
     setMyFriendsList(user?.friends)
@@ -30,7 +26,7 @@ const UserList = ({ user, users, setSelectedFriend, selectedFriend, setNavState,
 
 	const onUserClick = (user) => {
 		setSelectedFriend(user)
-		setNavState('dashboard')
+		setNavState('sparks')
 	}
 
 	return (
@@ -97,7 +93,7 @@ const UserModal = ({openModal, setOpenModal, allUsers, user, myFriendsList}) => 
 				transform: 'translate(75%, 30%)',
 				width: '400px',
 				height: '400px',
-				padding: '1rem'
+				padding: '1rem',
       }}>
 				{allUsers?.length === 0 ?
 					<p>All the users on the platform is already your friend! Invite your friends to join Spark!</p>	
