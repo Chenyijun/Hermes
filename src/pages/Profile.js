@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react'
 import Avatar from '../components/Avatar';
-import { MainWrapper } from '../components/wrappers'
 import { auth, db, storage } from '../firebase';
 import { ref, getDownloadURL, uploadBytes, deleteObject } from 'firebase/storage'
 import { getDoc, doc, updateDoc} from '@firebase/firestore';
 import { updateProfile, onAuthStateChanged } from '@firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { logOut } from '../firebase';
+import { WhiteText } from '../components/mainComponents';
 
 
 const Profile = ({user}) => {
@@ -15,36 +15,36 @@ const Profile = ({user}) => {
 	const navigate = useNavigate("");
 
 	useEffect(() => {
-			if (img){
-				const uploadImg = async () => {
-					const imgRef = ref( storage, `avatar/${new Date().getTime()} - ${img.name}`)
-					
-					try {
-						if (user && user.avatarPath) {
-							await deleteObject(ref(storage, user.avatarPath));
-						}
-						const snap = await uploadBytes(imgRef, img);
-						console.log("snap", snap)
-						const url = await getDownloadURL(ref(storage, snap.ref.fullPath));
-						console.log("url", url)
+		if (img){
+			const uploadImg = async () => {
+			const imgRef = ref( storage, `avatar/${new Date().getTime()} - ${img.name}`)
+			
+			try {
+				if (user && user.avatarPath) {
+					await deleteObject(ref(storage, user.avatarPath));
+				}
+				const snap = await uploadBytes(imgRef, img);
+				console.log("snap", snap)
+				const url = await getDownloadURL(ref(storage, snap.ref.fullPath));
+				console.log("url", url)
 
-						
-						await updateDoc(doc(db, "users", auth.currentUser.uid), {
-							avatar: url,
-							avatarPath: snap.ref.fullPath,
-						});
+				
+			await updateDoc(doc(db, "users", auth.currentUser.uid), {
+					avatar: url,
+					avatarPath: snap.ref.fullPath,
+				});
 
-						updateProfile(auth.currentUser, {
-							photoURL: url
-						})
+				updateProfile(auth.currentUser, {
+					photoURL: url
+				})
 
-						setImg("");
-					} catch (err) {
-						console.log(err.message)
-					}
+				setImg("");
+			} catch (err) {
+				console.log(err.message)
 			}
-			uploadImg();
-		};
+		}
+		uploadImg();
+	};
 }, [img]);
 
 const deleteImage = async () => {
@@ -75,10 +75,9 @@ return(
 						accept='image'
 						onChange={(e) => setImg(e.target.files[0])}/>
 				<button onClick={() => deleteImage()}>Delete Image</button>
-				<p>{user?.name || 'name'}</p>
-				<p>{user?.firstName || 'first name'}</p>
-				<p>{user?.lastName || 'last name'}</p>
-				<p>{user?.email || 'email'}</p>
+				<WhiteText><b>First Name:</b> {user?.firstName || 'first name'}</WhiteText>
+				<WhiteText><b>Last Name:</b> {user?.lastName || 'last name'}</WhiteText>
+				<WhiteText><b>Email:</b> {user?.email || 'email'}</WhiteText>
 				<button onClick={logOut}>Logout</button>
 			</div>)
 		}

@@ -22,8 +22,8 @@ export const TwoTabs = styled.div`
 export const NavButton = styled.button`
   height: 100%;
   width: 100%;
-  color: ${props => props.active ? offBlack : offWhite};
-  background: ${props => props.active ? 'transparent' : offBlack};
+  color: ${props => props.active ? offWhite : offBlack};
+  background: ${props => props.active ? offBlack : 'transparent'};
   border: none;
   padding: .5rem 1rem;
   font-weight: 600;

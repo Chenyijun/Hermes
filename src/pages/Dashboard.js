@@ -6,7 +6,9 @@ import HighlightCard from "../components/HighlightCard";
 import ActivityCard from "../components/ActivityCard";
 import Avatar from "../components/Avatar";
 import Profile from "./Profile";
-import { StatButton } from "../components/mainComponents"
+import { StatButton, IconButton } from "../components/mainComponents"
+import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
 
 function Dashboard({user}) {
@@ -22,25 +24,25 @@ function Dashboard({user}) {
             {isSettings ? 'My Settings' : 'My Dashboard'}
           </NameHeader>
       </NameWrapper>
-      <button onClick={() => setIsSettings(!isSettings)}>
-        {isSettings ? 'Close' : 'Settings'}
-      </button>
+      <IconButton onClick={() => setIsSettings(!isSettings)}>
+        {isSettings ?  <CloseRoundedIcon  style={{ color: '#fff', height: '45px', width: '45px' }}/> : <SettingsRoundedIcon  style={{ color: '#fff', height: '45px', width: '45px' }}/>}
+      </IconButton>
       </DashHeaderWrapper>
       <SimpleWrapper>
         {isSettings ? <Profile user={user} /> : 
         <div>
-           <Stats>
-          <WhiteText>Overall, You Have:</WhiteText>
-          <StatButton>12 Completed Sparks</StatButton>
-        </Stats>
-        <Header2>Sparks Log</Header2>
-        <ActivitiesWrapper>
-          <ActivityCard activity={{id: 'QxzY3tEVFLZVHDCDTpI1', title: 'Create a journal together'}} yourTurn started />
-          <ActivityCard activity={{id: 'rJnR2XbH8yQm86LfP3sh', title: 'Character Chat'}} yourTurn={false} started />
-        </ActivitiesWrapper>
-        <Header2>Conversation Log</Header2>
-        <Header2>Memories</Header2>
-        <HighlightCard title="Created a Song Together" banner="Month 2" friendName={'test'}/>
+          <Stats>
+            <WhiteText>Overall, You Have:</WhiteText>
+            <StatButton>12 Completed Sparks</StatButton>
+          </Stats>
+          <Header2>Sparks Log</Header2>
+          <ActivitiesWrapper>
+            <ActivityCard activity={{id: 'QxzY3tEVFLZVHDCDTpI1', title: 'Create a journal together'}} yourTurn started />
+            <ActivityCard activity={{id: 'rJnR2XbH8yQm86LfP3sh', title: 'Character Chat'}} yourTurn={false} started />
+          </ActivitiesWrapper>
+          <Header2>Conversation Log</Header2>
+          <Header2>Memories</Header2>
+          <HighlightCard title="Created a Song Together" banner="Month 2" friendName={'test'}/>
         </div>
         }
       </SimpleWrapper>

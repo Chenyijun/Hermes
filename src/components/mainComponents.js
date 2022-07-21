@@ -35,9 +35,11 @@ export const YellowButton = styled.button`
 
 export const IconButton = styled.button`
   cursor: pointer;
-  position: fixed;
+  ${props => props.modal && 
+ `position: fixed;
   top: 20px;
-  right: 20px; 
+  right: 20px; `
+  }
   background: none;
   border: 0;
 `

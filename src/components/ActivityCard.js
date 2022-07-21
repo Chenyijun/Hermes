@@ -3,6 +3,7 @@ import { ActivityCardWrapper, ActivityCardBanner, CardLink, ActivityCardBody } f
 
 
 const ActivityCard = ({ activity, yourTurn, started }) => {
+    // console.log('activity', activity)
     return (
       <CardLink to={`/activity/${activity?.id}`} key={activity?.id}> 
         <ActivityCardWrapper started={started}>
