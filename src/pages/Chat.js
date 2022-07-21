@@ -64,7 +64,6 @@ const Chat = ({ user, users, messages, messageCollection, timeDelay, friend}) =>
           })
           const sending = message.uid === user.uid
           const lastMessage = i === messages.length - 1
-          console.log(lastMessage)
           return checkFriendFilterMsg(friend?.uid, message)
             && <Message key={message.id} sender={sender} text={message.text} message={message} sending={sending} recieveTime={message.sentAt} timeStamp={message.createdAt} currDate={currDate}/>
         })}

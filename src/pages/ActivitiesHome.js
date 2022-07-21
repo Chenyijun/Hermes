@@ -23,6 +23,11 @@ function ActivitiesHome({user, selectedFriend}) {
   const [search, setSearch] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
 
+  const canView = (users) => {
+    const userArray = [user?.uid, selectedFriend?.uid]
+    return userArray.every(user => users?.includes(user))
+  }
+
   useEffect(() => {
     setOpenModal(selectedFriend && (sparkBoxes && sparkBoxes[0].sent === false) ? true : false)
   }, [sparkBoxes]);
@@ -77,31 +82,14 @@ function ActivitiesHome({user, selectedFriend}) {
   useEffect(() => {
     const q = query(collection(db, 'user_activities'))
     onSnapshot(q, (querySnapshot) => {
-      // querySnapshot.docs.map(doc => {
-      //   const includesUser = userArray.every(user => doc.data().users.includes(user))
-      //   const newActivity = {
-      //     id: doc.id,
-      //     activitiesID: doc.data().activitiesID,
-      //     why: doc.data().why,
-      //     status: doc.data().status
-      //   }
-      // })
       setUserActivities(querySnapshot.docs.map(doc => ({
         id: doc.id,
         activitiesID: doc.data().activitiesID,
+        users: doc.data().users,
         why: doc.data().why,
         status: doc.data().status
       })))
     })
-      // if (userArray.every(user => querySnapshot.docs.data().users.includes(user))){
-      //   // console.log(querySnapshot.docs.data().users)
-      //   setUserActivities(querySnapshot.docs.map(doc => ({
-      //     id: doc.id,
-      //     activitiesID: doc.data().activitiesID,
-      //     why: doc.data().why,
-      //     status: doc.data().status
-      //   })))
-      // }
   })
 
   return (
@@ -115,11 +103,12 @@ function ActivitiesHome({user, selectedFriend}) {
       <Header2>Active Sparks</Header2>
         <WhiteText>No active sparks at this time. Please click in your Library to start one!</WhiteText>
         <ActivitiesWrapper>
-          {/* {sparkBoxes?.map(box => {
-            const userActivity = userActivities.find(ua => ua.id === box.user_activitiesID)
-            const activity = allActivities.find(a => a.id === userActivity?.activitiesID)
-            return (<ActivityCard key={box?.user_activitiesID} activity={activity?.data} />)
-          })} */}
+        {userActivities.map(ua => {
+          if (ua.status !== 'not_started' && ua.status !== 'not_sent'){
+            const activity = allActivities.find(a => a.id === ua.activitiesID)
+            return (canView(ua.users) && <ActivityCard key={ua.id} activity={activity?.data} />)
+          }
+        })}
         </ActivitiesWrapper>
       <ActivityFlex>
         {userActivities?.map(activity => (<p>{activity.name}</p>))}
@@ -164,14 +153,8 @@ function ActivitiesHome({user, selectedFriend}) {
       <ActivitiesWrapper>
         {userActivities.map(ua => {
           const activity = allActivities.find(a => a.id === ua.activitiesID)
-          return (<ActivityCard key={ua.id} activity={activity?.data} />)
+          return (canView(ua.users) && <ActivityCard key={ua.id} activity={activity?.data} />)
         })}
-        {/* {sparkBoxes?.map(box => {
-          const userActivity = userActivities.find(ua => ua.id === box.user_activitiesID)
-          const activity = allActivities.find(a => a.id === userActivity?.activitiesID)
-          return (<ActivityCard key={box?.user_activitiesID} activity={activity?.data} />)
-        })} */}
-        {/* {allActivities.map(activity => ( <ActivityCard key={activity.id} activity={activity.data} />))} */}
       </ActivitiesWrapper>
       <BoxModal openModal={openModal} handleModalClose={handleModalClose} user={user} selectedFriend={selectedFriend} sparkBoxes={sparkBoxes} userActivities={userActivities} allActivities={allActivities}/>
       </>}
