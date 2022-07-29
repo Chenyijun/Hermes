@@ -6,6 +6,7 @@ import { ChatForm, ChatInput, SendButton } from "../components/chatComponents";
 import Message from "../components/Message"
 import moment from 'moment'
 import { useCollectionData} from "react-firebase-hooks/firestore";
+import DetailedMessage from "./DetailedMessage";
 
 function ChatHome({user, selectedFriend, users}) {
   const messageCollection = collection(db, 'messages'); //ref
@@ -13,6 +14,13 @@ function ChatHome({user, selectedFriend, users}) {
   const [messages] = useCollectionData(messageQuery);
   const [formValue, setFormValue] = useState('');
   const [currDate, setCurrDate] = useState(new Date());
+  const [showDetails, setShowDetails] = useState(false)
+  const [detailedMessage, setDetailedMessage] = useState({sender: null, text: null, sentTime: null, recieved: null})
+
+  const setDetails = (message) => {
+    setDetailedMessage(message)
+    setShowDetails(true)
+  }
 
   const messagesEndRef = useRef(null)
 
@@ -59,7 +67,8 @@ function ChatHome({user, selectedFriend, users}) {
   }
 
   return (
-    <ChatWrapper>
+    <>
+    {showDetails ? <DetailedMessage message={detailedMessage} setShowDetails={setShowDetails} user={user}/> : <ChatWrapper>
         {user && messages && messages.map((message, i) => {
           const sender = message && users && users.find(user => {
             return user.uid === message.uid
@@ -67,7 +76,7 @@ function ChatHome({user, selectedFriend, users}) {
           const sending = message.uid === user.uid
           const lastMessage = i === messages.length - 1
           return checkFriendFilterMsg(selectedFriend?.uid, message)
-            && <Message key={message.id} sender={sender} text={message.text} message={message} sending={sending} recieveTime={message.sentAt} timeStamp={message.createdAt} currDate={currDate}/>
+            && <Message key={message.id} sender={sender} text={message.text} message={message} sending={sending} recieveTime={message.sentAt} timeStamp={message.createdAt} currDate={currDate} setDetails={setDetails}/>
         })}
         <ChatForm onSubmit={sendMessage}>
         <ChatInput value={formValue} onChange={(e) => setFormValue(e.target.value)} />
@@ -75,7 +84,8 @@ function ChatHome({user, selectedFriend, users}) {
         </ChatForm>
         {/* Forced scroll */}
         <div ref={messagesEndRef} />
-      </ChatWrapper>
+    </ChatWrapper>}
+    </>
   );
 }
 export default ChatHome;

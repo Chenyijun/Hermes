@@ -31,6 +31,7 @@ export const MessageWrapper = styled.div`
     display: grid;
     grid-template-columns: minmax(auto, 70px) auto;
     grid-template-areas: "avatar message" ". time";
+    cursor: pointer;
 
     & ${AvatarBubble} ${DefaultAvatarBubble} {
         grid-area: avatar;
