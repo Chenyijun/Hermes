@@ -2,15 +2,15 @@ import styled from 'styled-components'
 import { lightGray, fadedPurple, darkPurple } from '../constants'
 
 export const AvatarBubble = styled.img`
-    height: ${props => props.small ? '50px' : '100px'};
-    width: ${props => props.small ? '50px' : '100px'};
+    height: ${props => props.size === 'small' ? '50px' : props.size === 'xs' ? '35px' : '100px'};
+    width: ${props => props.size === 'small' ? '50px' : props.size === 'xs' ? '35px' : '100px'};
     background: ${lightGray};
     border-radius: 50%;
 `
 
 export const DefaultAvatarBubble = styled.div`
-    height: ${props => props.small ? '50px' : '100px'};
-    width: ${props => props.small ? '50px' : '100px'};
+    height: ${props => props.size === 'small' ? '50px' : props.size === 'xs' ? '35px' : '100px'};
+    width: ${props => props.size === 'small' ? '50px' : props.size === 'xs' ? '35px' : '100px'};
     background: ${lightGray};
     border-radius: 50%;
     display: flex;

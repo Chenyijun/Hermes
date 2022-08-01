@@ -42,6 +42,7 @@ export const IconButton = styled.button`
   }
   background: none;
   border: 0;
+  color: ${props => props.white && 'white'};
 `
 
 export const StatButton = styled.button`

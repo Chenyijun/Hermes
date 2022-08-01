@@ -69,7 +69,7 @@ return(
 	<>
 		{isLoading ? (<div>Loading</div>)
 		: (<div>
-				<Avatar user={user} />
+				<Avatar user={user} size='large'/>
 				<input 
 						type='file'
 						accept='image'

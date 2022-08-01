@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import {addDoc, Timestamp, query, collection, orderBy } from "firebase/firestore";
+import {doc, setDoc, Timestamp, query, collection, orderBy } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import {ChatWrapper} from '../components/wrappers'
 import { ChatForm, ChatInput, SendButton } from "../components/chatComponents";
@@ -44,13 +44,17 @@ function ChatHome({user, selectedFriend, users}) {
   const sendMessage = async(e) => {
       e.preventDefault();
       const { uid } = auth.currentUser;
+      const docRef = doc(messageCollection);
+      const docId = docRef.id
 
-      await addDoc(messageCollection, {
+      await setDoc(docRef, {
+          id: docId,
           text: formValue,
           createdAt: Timestamp.now(),
           sentAt: new Timestamp(Timestamp.now().seconds + 600, Timestamp.now().nanoseconds),
           uid,
           recipientUid: selectedFriend.uid || '',
+          nestedMessage: []
       })
       setFormValue('')
       // drop.current.scrollIntoView({ behavior: 'smooth'});

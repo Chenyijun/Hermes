@@ -9,7 +9,7 @@ const Message = ({ sender, text, sending, message, recieveTime, timeStamp, currD
   const haveSent = () => {
     return moment(recieveTime.toDate()) <= moment(currDate)
   }
-  const messageDetails = {sender: sender, text: text, sentTime: sentTime, recieved: recieveAt}
+  const messageDetails = {id: message.id, sender: sender, text: text, sentTime: sentTime, recieved: recieveAt, nestedMessage: message.nestedMessage, haveSent: haveSent()}
 
   return (
     <MessageWrapper key={message && message.id} onClick={()=>setDetails(messageDetails)}>
