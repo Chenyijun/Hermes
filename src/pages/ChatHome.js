@@ -2,11 +2,12 @@ import React, { useState, useRef, useEffect } from "react";
 import {doc, setDoc, Timestamp, query, collection, orderBy } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import {ChatWrapper} from '../components/wrappers'
-import { ChatForm, ChatInput, SendButton } from "../components/chatComponents";
+import { ChatForm, ChatInput, SendButton, ChatMessageWrappers } from "../components/chatComponents";
 import Message from "../components/Message"
 import moment from 'moment'
 import { useCollectionData} from "react-firebase-hooks/firestore";
 import DetailedMessage from "./DetailedMessage";
+import SendIcon from '@mui/icons-material/Send';
 
 function ChatHome({user, selectedFriend, users}) {
   const messageCollection = collection(db, 'messages'); //ref
@@ -72,23 +73,25 @@ function ChatHome({user, selectedFriend, users}) {
 
   return (
     <>
-    {showDetails ? <DetailedMessage message={detailedMessage} setShowDetails={setShowDetails} user={user}/> : <ChatWrapper>
-        {user && messages && messages.map((message, i) => {
-          const sender = message && users && users.find(user => {
-            return user.uid === message.uid
-          })
-          const sending = message.uid === user.uid
-          const lastMessage = i === messages.length - 1
-          return checkFriendFilterMsg(selectedFriend?.uid, message)
-            && <Message key={message.id} sender={sender} text={message.text} message={message} sending={sending} recieveTime={message.sentAt} timeStamp={message.createdAt} currDate={currDate} setDetails={setDetails}/>
-        })}
+    {showDetails ? <DetailedMessage message={detailedMessage} setShowDetails={setShowDetails} user={user}/> : <>
+        <ChatMessageWrappers>
+          {user && messages && messages.map((message, i) => {
+            const sender = message && users && users.find(user => {
+              return user.uid === message.uid
+            })
+            const sending = message.uid === user.uid
+            const lastMessage = i === messages.length - 1
+            return checkFriendFilterMsg(selectedFriend?.uid, message)
+              && <Message key={message.id} sender={sender} text={message.text} message={message} sending={sending} recieveTime={message.sentAt} timeStamp={message.createdAt} currDate={currDate} setDetails={setDetails}/>
+          })}
+        </ChatMessageWrappers>
         <ChatForm onSubmit={sendMessage}>
-        <ChatInput value={formValue} onChange={(e) => setFormValue(e.target.value)} />
-        <SendButton type="submit">Submit</SendButton>
+        <ChatInput value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="Type Something..."/>
+        <SendButton type="submit" disabled={!formValue}><SendIcon /></SendButton>
         </ChatForm>
         {/* Forced scroll */}
         <div ref={messagesEndRef} />
-    </ChatWrapper>}
+    </>}
     </>
   );
 }

@@ -27,7 +27,11 @@ const DetailedMessage = ({message, setShowDetails, user}) => {
   }
 
   useEffect(() => {
-    setHighlight(value?.slice(-1)[0] || null)
+    if ( value?.slice(-1)[0].comment !== null) {
+      setHighlight(null)
+    } else {
+      setHighlight(value?.slice(-1)[0] || null)
+    }
   }, [value]);
 
   const handleSubmit = (e) => {
@@ -41,23 +45,44 @@ const DetailedMessage = ({message, setShowDetails, user}) => {
 
   const handleChange = (e) => {
     if (value.length === 0 || e.length > value.length) {
-      if (value.length > 0 && value[value.length-1].comment === null) {
-        console.log('empty')
-        const newValue = value.filter((v) => {
-          return v.id !== comment.id;
+      console.log('1', e)
+      if (e.length > 1 && e[e.length-1].comment === null) {
+        console.log('2')
+        const newValue = e.filter((v, i) => {
+          return  i == e.length-1 || v.comment !== null;
         })
         setValue(newValue)
-        console.log('HERE', newValue)
+      } else{
+        setValue(e)
       }
-      setValue(e)
     } else {
-      console.log('click')
+      console.log('3', e)
+      console.log('3v', value)
+      const newValue = value.filter((v, i) => {
+        return  v.comment !== null;
+      })
+      setValue(newValue)
+      const test = value.filter(({ id: id1 }) => !e.some(({ id: id2 }) => id2 === id1));
+      setHighlight(null)
+      // if (value[value.length-1].comment !==null){
+      //   console.log('4', e)
+      // }else {
+      //   console.log('5', e)
+      //   setValue(e)
+      // }
+      // const newValue = e.filter((v, i) => {
+      //   console.log('v', v)
+      //   console.log('i', i)
+      //   console.log(e.length)
+      //   return  i !== e.length-1;
+      // })
+      // console.log('newValue', newValue)
+      // setValue(newValue)
     }
 
   }
 
   const deleteComment = (comment) => {
-    console.log('COMMENT', comment)
     const newValue = value.filter((v) => {
       return v.id !== comment.id;
     })
@@ -103,8 +128,8 @@ const DetailedMessage = ({message, setShowDetails, user}) => {
           </CommentBody>
         </CommentWrapper>}
         {value?.map(v => {
-          return (
-            <CommentWrapper>
+          return (<>
+            {v?.comment && <CommentWrapper>
               <Avatar user={v?.user} size='xs' />
               <CommentBody>
                 <CommentHeader>
@@ -113,7 +138,8 @@ const DetailedMessage = ({message, setShowDetails, user}) => {
                 </CommentHeader>
                 {v?.comment}
               </CommentBody>
-          </CommentWrapper>
+          </CommentWrapper>}
+          </>
           )
         })}
       </NotesBackground>

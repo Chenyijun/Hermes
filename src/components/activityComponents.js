@@ -5,11 +5,11 @@ import { fadedPurple, periwinkle } from '../constants';
 export const ActivityCardWrapper = styled.div`
   display: grid;
   grid-template-rows: ${props => props.started ? '41px auto': 'auto'};
-  border: 1px solid #FFA800;
   border-radius: 5px;
   align-items: center;
   width: 230px;
   height: 230px;
+  background: #2B2B2B;
 `
 
 export const ActivityCardBanner = styled.div`

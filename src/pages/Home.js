@@ -64,7 +64,7 @@ function Home({props}) {
     <HomeWrapper noTopNav={isDashboard}>
       <UserList user={user} users={users} db={db} selectedFriend={selectedFriend} setSelectedFriend={setSelectedFriend} navState={navState} setNavState={setNavState}/>
       {!isDashboard && <TopNavBar friend={selectedFriend} navState={navState} setNavState={setNavState} timeDelay={timeDelay} setTimeDelay={setTimeDelay} admin={user?.admin} small/>}
-      <BodyWrapper>
+      <BodyWrapper noPadding={navState=== 'messages'}>
         {isDashboard && <Dashboard user={user} selectedFriend={selectedFriend} />}
         {navState === 'messages' && <ChatHome user={user} selectedFriend={selectedFriend} users={users} timeDelay={timeDelay} />}
         {navState === 'sparks' && <ActivitiesHome user={user} selectedFriend={selectedFriend} />}

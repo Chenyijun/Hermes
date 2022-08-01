@@ -51,7 +51,7 @@ export const SimpleWrapper = styled.div`
     padding: 1rem;
 `
 export const BodyWrapper = styled.div`
-    padding: 1rem;
+    padding: ${props => !props.noPadding && '1rem'};
     grid-area: body;
     background: black;
     overflow-y: auto;
