@@ -10,6 +10,7 @@ export const ActivityCardWrapper = styled.div`
   width: 230px;
   height: 230px;
   background: #2B2B2B;
+  box-sizing: border-box;
 `
 
 export const ActivityCardBanner = styled.div`

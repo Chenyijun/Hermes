@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { offBlack, darkerGray, accentYellow, offWhite } from '../constants'
+import { offBlack, lightGray, accentYellow, offWhite } from '../constants'
 
 export const TopNavBar = styled.nav`
   display: flex;
@@ -71,7 +71,6 @@ export const UserButton = styled.button`
   align-items: center;
   border-radius: 10px;
   cursor: pointer;
-  margin-bottom: 1rem;
   padding: 0.5rem 0;
 `
 
@@ -81,4 +80,9 @@ export const UserButtonText = styled.p`
   font-weight: 400;
   margin-top: 8px;
   margin-bottom: 0;
+`
+
+export const Divider = styled.hr`
+  color: white;
+  width: 100%;
 `

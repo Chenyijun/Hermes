@@ -27,10 +27,11 @@ const DetailedMessage = ({message, setShowDetails, user}) => {
   }
 
   useEffect(() => {
-    if ( value?.slice(-1)[0].comment !== null) {
+    const lastValue = value?.slice(-1)[0]
+    if ( lastValue?.comment !== null) {
       setHighlight(null)
     } else {
-      setHighlight(value?.slice(-1)[0] || null)
+      setHighlight(lastValue || null)
     }
   }, [value]);
 
@@ -64,27 +65,13 @@ const DetailedMessage = ({message, setShowDetails, user}) => {
       setValue(newValue)
       const test = value.filter(({ id: id1 }) => !e.some(({ id: id2 }) => id2 === id1));
       setHighlight(null)
-      // if (value[value.length-1].comment !==null){
-      //   console.log('4', e)
-      // }else {
-      //   console.log('5', e)
-      //   setValue(e)
-      // }
-      // const newValue = e.filter((v, i) => {
-      //   console.log('v', v)
-      //   console.log('i', i)
-      //   console.log(e.length)
-      //   return  i !== e.length-1;
-      // })
-      // console.log('newValue', newValue)
-      // setValue(newValue)
     }
 
   }
 
   const deleteComment = (comment) => {
     const newValue = value.filter((v) => {
-      return v.id !== comment.id;
+      return v.id !== comment?.id;
     })
     setValue(newValue)
     updateMessage()
@@ -98,7 +85,7 @@ const DetailedMessage = ({message, setShowDetails, user}) => {
           <IconButton onClick={()=>setShowDetails(false)} white><ArrowBackIosIcon/></IconButton>
           <MessageTitle>Message from {message.sender.firstName} </MessageTitle>
         </DetailedMessageHeader>
-        <SmallText padding='0 3rem' marginTop='0'>{message.haveSent ? `Sent ${message.sentTime} > Received ${message.recieved}`:`Sent ${message.sentTime} > Sending... (will receive at ${message.recieved})`}</SmallText>
+        <SmallText padding='0 3rem' marginTop='0'>{message.haveSent ? `Sent at ${message.sentTime}. Received at ${message.recieved}`:`Sent at ${message.sentTime}. Estimated time of arrival is ${message.recieved})`}</SmallText>
         <MainText>
           {message?.text && <TextAnnotator
             content={message.text}
@@ -134,7 +121,7 @@ const DetailedMessage = ({message, setShowDetails, user}) => {
               <CommentBody>
                 <CommentHeader>
                   <HighlightedText>"{v?.text}"</HighlightedText>
-                  <IconButton onClick={()=> deleteComment(v)} white><DeleteIcon/></IconButton>
+                  {v?.user.uid === user.uid && <IconButton onClick={()=> deleteComment(v)} white><DeleteIcon/></IconButton>}
                 </CommentHeader>
                 {v?.comment}
               </CommentBody>

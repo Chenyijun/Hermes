@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { UserListWrapper } from '../components/wrappers'
-import { UserButton, UserButtonText } from "../components/navComponents";
+import { UserButton, UserButtonText, Divider } from "../components/navComponents";
 import { doc, updateDoc} from '@firebase/firestore';
 import { db } from '../firebase';
 import Avatar from "../components/Avatar";
@@ -28,12 +28,23 @@ const UserList = ({ user, users, setSelectedFriend, selectedFriend, setNavState,
 		setNavState('sparks')
 	}
 
+	const onAllChatClick = () => {
+		setSelectedFriend(null)
+		setNavState('messages')
+	}
+
 	return (
 		<UserListWrapper>
 			<UserButton onClick={()=>onProfileClick()} selected={selectedFriend?.uid === user?.uid}>
 				<Avatar user={user} />
-				<UserButtonText>{user?.name || 'My Profile'}</UserButtonText>
+				<UserButtonText>{user?.name || 'Me'}</UserButtonText>
 			</UserButton>
+			<Divider/>
+			<UserButton onClick={()=>onAllChatClick()} selected={selectedFriend === null}>
+				<Avatar all />
+				<UserButtonText>All Chat</UserButtonText>
+			</UserButton>
+			<Divider/>
 			{user && myFriends?.map(friend => {
 			return (
 					<UserButton key={friend.uid} onClick={()=>onUserClick(friend)} selected={selectedFriend?.uid === friend.uid}>

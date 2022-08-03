@@ -11,12 +11,13 @@ export const AvatarBubble = styled.img`
 export const DefaultAvatarBubble = styled.div`
     height: ${props => props.size === 'small' ? '45px' : props.size === 'xs' ? '35px' : '100px'};
     width: ${props => props.size === 'small' ? '45px' : props.size === 'xs' ? '35px' : '100px'};
-    background: ${lightGray};
+    background: ${props => props.white ? 'white': lightGray};
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
+    padding-top: ${props => props.white && '4px'};
 
     & p {
         font-family: "Poppins", sans-serif; 
@@ -128,6 +129,7 @@ export const NotificationBubble = styled.div`
 export const ChatMessageWrappers = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    height: calc(100vh - 82px);
+    overflow-y: scroll;
 `

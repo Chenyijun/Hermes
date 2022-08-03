@@ -44,7 +44,9 @@ export const UserListWrapper = styled.div`
 `
 
 export const ChatWrapper = styled.div`
-    padding: 1rem;
+    display: grid;
+    grid-template-rows: auto 82px;
+    padding-top: 1rem;
 `
 
 export const SimpleWrapper = styled.div`

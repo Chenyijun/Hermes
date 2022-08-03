@@ -54,7 +54,7 @@ function ChatHome({user, selectedFriend, users}) {
           createdAt: Timestamp.now(),
           sentAt: new Timestamp(Timestamp.now().seconds + 600, Timestamp.now().nanoseconds),
           uid,
-          recipientUid: selectedFriend.uid || '',
+          recipientUid: selectedFriend?.uid || null,
           nestedMessage: []
       })
       setFormValue('')
@@ -71,26 +71,37 @@ function ChatHome({user, selectedFriend, users}) {
     return false
   }
 
+  const allChatFilter = (message) => {
+    if (message.recipientUid === null){
+      return true
+    }
+    return false
+  }
+
   return (
     <>
     {showDetails ? <DetailedMessage message={detailedMessage} setShowDetails={setShowDetails} user={user}/> : <>
-        <ChatMessageWrappers>
-          {user && messages && messages.map((message, i) => {
-            const sender = message && users && users.find(user => {
-              return user.uid === message.uid
-            })
-            const sending = message.uid === user.uid
-            const lastMessage = i === messages.length - 1
-            return checkFriendFilterMsg(selectedFriend?.uid, message)
-              && <Message key={message.id} sender={sender} text={message.text} message={message} sending={sending} recieveTime={message.sentAt} timeStamp={message.createdAt} currDate={currDate} setDetails={setDetails}/>
-          })}
-        </ChatMessageWrappers>
-        <ChatForm onSubmit={sendMessage}>
-        <ChatInput value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="Type Something..."/>
-        <SendButton type="submit" disabled={!formValue}><SendIcon /></SendButton>
-        </ChatForm>
+        <ChatWrapper>
+          <ChatMessageWrappers>
+            {user && messages && messages.map((message, i) => {
+              const sender = message && users && users.find(user => {
+                return user.uid === message.uid
+              })
+              const sending = message.uid === user.uid
+              const lastMessage = i === messages.length - 1
+              return selectedFriend === null
+              ? (allChatFilter(message) && <Message key={message.id} sender={sender} text={message.text} message={message} sending={sending} recieveTime={message.sentAt} timeStamp={message.createdAt} currDate={currDate} setDetails={setDetails}/>)
+              :(checkFriendFilterMsg(selectedFriend?.uid, message)
+                && <Message key={message.id} sender={sender} text={message.text} message={message} sending={sending} recieveTime={message.sentAt} timeStamp={message.createdAt} currDate={currDate} setDetails={setDetails}/>)
+            })}
+            <div ref={messagesEndRef} />
+          </ChatMessageWrappers>
+          <ChatForm onSubmit={sendMessage}>
+            <ChatInput value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="Type Something..."/>
+            <SendButton type="submit" disabled={!formValue}><SendIcon /></SendButton>
+          </ChatForm>
+        </ChatWrapper>
         {/* Forced scroll */}
-        <div ref={messagesEndRef} />
     </>}
     </>
   );
