@@ -71,6 +71,7 @@ const logInWithEmailAndPassword = async (email, password) => {
         email,
         avatar: '',
         avatarPath: '',
+        box: true,
         friends: []
       });
     } catch (err) {

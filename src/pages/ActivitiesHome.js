@@ -24,13 +24,23 @@ function ActivitiesHome({user, selectedFriend}) {
   const [isLoading, setIsLoading] = useState(true)
 
   const canView = (users) => {
-    const userArray = [user?.uid, selectedFriend?.uid]
-    return userArray.every(user => users?.includes(user))
+    // const userArray = [user?.uid, selectedFriend?.uid]
+    // return userArray.every(user => users?.includes(user))
+    // allow everyone to get boxes
+    return true
   }
 
+  // useEffect(() => {
+  //   // setOpenModal(selectedFriend && (sparkBoxes && sparkBoxes[0].sent === false) ? true : false)
+  //   //allow everyone to get boxes since technically boxes are per set of
+  //   setOpenModal((selectedFriend && user.box) ? true : false)
+  // }, [sparkBoxes]);
+
   useEffect(() => {
-    setOpenModal(selectedFriend && (sparkBoxes && sparkBoxes[0].sent === false) ? true : false)
-  }, [sparkBoxes]);
+    // setOpenModal(selectedFriend && (sparkBoxes && sparkBoxes[0].sent === false) ? true : false)
+    //allow everyone to get boxes since technically boxes are per set of
+    setOpenModal((selectedFriend && user.box) ? true : false)
+  }, [user]);
 
   useEffect(() => {
     if (selectedFriend){
@@ -49,6 +59,9 @@ function ActivitiesHome({user, selectedFriend}) {
     console.log('modal close')
     await updateDoc(doc(db, "boxes", box.id), {
       sent: true
+    });
+    await updateDoc(doc(db, "users", user.uid), {
+      box: false
     });
     setOpenModal(false)
   }
@@ -153,7 +166,7 @@ function ActivitiesHome({user, selectedFriend}) {
       <ActivitiesWrapper>
         {userActivities.map(ua => {
           const activity = allActivities.find(a => a.id === ua.activitiesID)
-          return (canView(ua.users) && <ActivityCard key={ua.id} activity={activity?.data} />)
+          return (canView(ua.users) && <ActivityCard key={ua.id} activity={activity?.data} newActivity />)
         })}
       </ActivitiesWrapper>
       <BoxModal openModal={openModal} handleModalClose={handleModalClose} user={user} selectedFriend={selectedFriend} sparkBoxes={sparkBoxes} userActivities={userActivities} allActivities={allActivities}/>
@@ -194,7 +207,7 @@ function ActivitiesHome({user, selectedFriend}) {
                 const userActivity = userActivities.find(ua => ua.id === uaID)
                 const activity = allActivities.find(a => a.id === userActivity?.activitiesID)
                 return (<div key={uaID} >
-                  <ActivityCard activity={activity?.data} />
+                  <ActivityCard activity={activity?.data} newActivity/>
                   <WhiteText>{userActivity?.why}</WhiteText>
                   </div>)
               })

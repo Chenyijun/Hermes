@@ -30,7 +30,9 @@ function ChatHome({user, selectedFriend, users}) {
   }
 
   useEffect(() => {
-    scrollToBottom()
+      console.log('scroll')
+      scrollToBottom()
+    
   }, [messages]);
 
   useEffect(() => {
@@ -66,6 +68,9 @@ function ChatHome({user, selectedFriend, users}) {
       return true
     }
     if ((message.uid === friendUid) && (message.recipientUid === user.uid)){
+      if (user?.admin){
+        return true
+      }
       return moment(message.sentAt.toDate()) <= moment(currDate) ? true : false
     }
     return false
@@ -94,7 +99,7 @@ function ChatHome({user, selectedFriend, users}) {
               :(checkFriendFilterMsg(selectedFriend?.uid, message)
                 && <Message key={message.id} sender={sender} text={message.text} message={message} sending={sending} recieveTime={message.sentAt} timeStamp={message.createdAt} currDate={currDate} setDetails={setDetails}/>)
             })}
-            <div ref={messagesEndRef} />
+            {messages?.length > 8 && <div ref={messagesEndRef} />}
           </ChatMessageWrappers>
           <ChatForm onSubmit={sendMessage}>
             <ChatInput value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="Type Something..."/>

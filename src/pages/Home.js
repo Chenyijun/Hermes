@@ -50,11 +50,10 @@ function Home({props}) {
 				if (docSnap.exists) {
 					setUser(docSnap.data());
 					setIsLoading(false);
-					console.log('set user', user);
 				}
 			});
 		})
-	},[])
+	},[user])
 
   useEffect( () => {
     user && (myFriends?.length > 0 ? setSelectedFriend(myFriendsList[0]) : setSelectedFriend(user))

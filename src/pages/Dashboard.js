@@ -40,7 +40,6 @@ function Dashboard({user}) {
             <ActivityCard activity={{id: 'QxzY3tEVFLZVHDCDTpI1', title: 'Create a journal together'}} yourTurn started />
             <ActivityCard activity={{id: 'rJnR2XbH8yQm86LfP3sh', title: 'Character Chat'}} yourTurn={false} started />
           </ActivitiesWrapper>
-          <Header2>Conversation Log</Header2>
           <Header2>Memories</Header2>
           <HighlightCard title="Created a Song Together" banner="Month 2" friendName={'test'}/>
         </div>
