@@ -4,43 +4,60 @@ import { fadedPurple, periwinkle } from '../constants';
 
 export const ActivityCardWrapper = styled.div`
   display: grid;
-  grid-template-rows: ${props => props.started ? '41px auto': 'auto'};
+  grid-template-rows: 1fr 4fr 1fr;
+  grid-gap: 1rem;
   border-radius: 5px;
   align-items: center;
   width: 230px;
-  height: 230px;
+  height: 240px;
   background: #2B2B2B;
   box-sizing: border-box;
+  padding: 1rem;
 `
 
 export const ActivityCardBanner = styled.div`
-  background: ${props => props.started && props.yourTurn ? fadedPurple : periwinkle};
-  display: ${props => !props.started ? 'none' : 'flex'};
-  color: white;
-  width: 100%;
   height: 100%;
-  flex-direction: column;
-  align-items: center;
+  width: 100%;
+  background: black;
+  display: flex;
   justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+`
+export const TurnBanner = styled.div`
+  color: white;
+  min-height: 19px;
+  border-radius: 5px;
   font-size: 16px;
   font-weight: 600;
-  border-radius: 5px 5px 0 0;
   font-family: "Poppins", sans-serif; 
-
+  p{
+    margin: 0;
+    text-align: center;
+  }
 `
 
 export const ActivityCardBody = styled.div`
-  background: linear-gradient(180deg, rgba(50, 1, 188, 0.2) 0%, #000000 91.52%), white;
-  height: 100%;
   display: flex;
   justify-content: center;
-  align-items: end;
+  align-items: center;  
+  height: 100%;
   color: white;
   font-size: 16px;
   font-weight: 600;
   font-family: "Poppins", sans-serif; 
-  border-radius: 0 0 5px 5px;
 
+  p{
+    margin: 0;
+    text-align: center;
+  }
+`
+
+export const ActivityCardImage = styled.div`
+  height: 100%;
+  width: 100%;
+  background: ${fadedPurple};
+  border-radius: 5px;
 `
 
 export const Tag = styled.div`

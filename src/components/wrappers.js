@@ -77,3 +77,23 @@ export const BoxActivitiesWrapper = styled(ActivitiesWrapper)`
     padding: 2rem 0;
 
 `
+
+export const SettingsWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    margin: auto;
+`
+
+export const SettingsFormWrapper = styled.form`
+    display: grid;
+    grid-template-columns: max-content auto;
+    max-width: 500px;
+    grid-gap: 1rem;
+`
+export const ProfileAvatarWrapper = styled.div`
+    display: grid;
+    grid-template-columns: max-content auto;
+    align-items: center;
+    grid-gap: 1rem;
+`

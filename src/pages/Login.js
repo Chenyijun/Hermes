@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth, logInWithEmailAndPassword, signInWithGoogle } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { LoginWrapper, Header1, LoginFormWrapper, WhiteText, WhiteLink, LoginBottomWrapper } from "../components/mainComponents";
+
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -17,8 +19,10 @@ function Login() {
   }, [user, loading]);
 
   return (
-    <div className="login">
-      <div className="login__container">
+    <LoginWrapper>
+      <Header1>Spark</Header1>
+      <LoginFormWrapper>
+        <WhiteText>Email</WhiteText>
         <input
           type="text"
           className="login__textBox"
@@ -26,6 +30,7 @@ function Login() {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="E-mail Address"
         />
+        <WhiteText>Password</WhiteText>
         <input
           type="password"
           className="login__textBox"
@@ -33,23 +38,21 @@ function Login() {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
         />
+        <br/>
         <button
           className="login__btn"
           onClick={() => logInWithEmailAndPassword(email, password)}
         >
           Login
         </button>
-        <button className="login__btn login__google" onClick={signInWithGoogle}>
-          Login with Google
-        </button>
-        <div>
-          <Link to="/reset">Forgot Password</Link>
-        </div>
-        <div>
-          Don't have an account? <Link to="/register">Register</Link> now.
-        </div>
-      </div>
-    </div>
+        <br/>
+      </LoginFormWrapper>
+      <LoginBottomWrapper>
+          <WhiteLink to="/reset">Forgot Password</WhiteLink>
+          <br/>
+          Don't have an account? <WhiteLink to="/register">Register</WhiteLink> now.
+        </LoginBottomWrapper>
+    </LoginWrapper>
   );
 }
 export default Login;

@@ -2,16 +2,21 @@ import React, {useEffect, useState} from 'react'
 import Avatar from '../components/Avatar';
 import { auth, db, storage } from '../firebase';
 import { ref, getDownloadURL, uploadBytes, deleteObject } from 'firebase/storage'
-import { getDoc, doc, updateDoc} from '@firebase/firestore';
+import { getDoc, doc, updateDoc, setDoc} from '@firebase/firestore';
 import { updateProfile, onAuthStateChanged } from '@firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { logOut } from '../firebase';
-import { WhiteText } from '../components/mainComponents';
+import { SettingsForm, WhiteText } from '../components/mainComponents';
+import { ProfileAvatarWrapper, SettingsFormWrapper, SettingsWrapper } from '../components/wrappers';
 
 
 const Profile = ({user}) => {
 	const [img, setImg] = useState('')
 	const [isLoading, setIsLoading] = useState(false);
+	const [firstName, setFirstName] = useState(user?.firstName)
+	const [lastName, setLastName] = useState(user?.lastName)
+	const [email, setEmail] = useState(user?.email)
+
 	const navigate = useNavigate("");
 
 	useEffect(() => {
@@ -65,21 +70,60 @@ const deleteImage = async () => {
   }
 };
 
+const updateUserProfile = async () => {
+	console.log('firstName', firstName)
+	console.log('uid', auth.currentUser.uid)
+	await setDoc(doc(db, "users", auth.currentUser.uid), {
+		firstName: firstName,
+		lastName: lastName,
+		email: email,
+	});
+}
+
 return(
 	<>
 		{isLoading ? (<div>Loading</div>)
-		: (<div>
-				<Avatar user={user} size='large'/>
-				<input 
-						type='file'
-						accept='image'
-						onChange={(e) => setImg(e.target.files[0])}/>
-				<button onClick={() => deleteImage()}>Delete Image</button>
-				<WhiteText><b>First Name:</b> {user?.firstName || 'first name'}</WhiteText>
-				<WhiteText><b>Last Name:</b> {user?.lastName || 'last name'}</WhiteText>
-				<WhiteText><b>Email:</b> {user?.email || 'email'}</WhiteText>
+		: (<SettingsWrapper>
+				<ProfileAvatarWrapper>
+					<Avatar user={user} size='large'/>
+					<div>
+					<input 
+							type='file'
+							accept='image'
+							onChange={(e) => setImg(e.target.files[0])}/>
+					{user?.avatarPath && <button onClick={() => deleteImage()}>Delete Image</button>}
+					</div>
+				</ProfileAvatarWrapper>
+				<br/>
+				<form onSubmit={updateUserProfile}>
+					<SettingsFormWrapper>
+						<WhiteText>
+							<b>First Name:</b>
+						</WhiteText>
+						<input
+							type='text'
+							value={firstName}
+							onChange={(e)=>setFirstName(e.target.value)} />
+						<WhiteText>
+							<b>Last Name:</b>
+						</WhiteText>
+						<input
+							type='text'
+							value={lastName}
+							onChange={(e)=>setLastName(e.target.value)} />
+						<WhiteText>
+							<b>Email:</b>
+						</WhiteText>
+						<input
+							type='text'
+							value={email}
+							onChange={(e)=>setEmail(e.target.value)} />
+					</SettingsFormWrapper>
+					<button type="submit" disabled={!firstName || !lastName || !email}>Update</button>
+				</form>
+				<br /> <br/>
 				<button onClick={logOut}>Logout</button>
-			</div>)
+			</SettingsWrapper>)
 		}
  </>
 	)

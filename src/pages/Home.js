@@ -31,8 +31,8 @@ function Home({props}) {
 
   const [selectedFriend, setSelectedFriend] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [navState, setNavState] = useState(props?.location.state || 'sparks')
-  const isDashboard = (selectedFriend?.uid === user?.uid)
+  const [navState, setNavState] = useState(props?.location.state || 'dashboard')
+  const isDashboard = (selectedFriend?.uid === user?.uid || navState === 'dashboard')
 
   useEffect( () => {
     setMyFriendsList(user?.friends)

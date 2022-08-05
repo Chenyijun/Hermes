@@ -110,8 +110,10 @@ const DetailedMessage = ({message, setShowDetails, user}) => {
             <CommentHeader>
               <HighlightedText>"{highlight?.text}"</HighlightedText>
             </CommentHeader>
-            <input type='text' value={comment} onChange={(e)=>setComment(e.target.value)} />
-            <button onClick={()=>handleSubmit()}>Submit</button>
+            <form onSubmit={()=> handleSubmit()}>
+              <input type='text' value={comment} onChange={(e)=>setComment(e.target.value)} />
+              <button type='submit'>Submit</button>
+            </form>
           </CommentBody>
         </CommentWrapper>}
         {value?.map(v => {

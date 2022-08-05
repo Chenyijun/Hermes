@@ -90,7 +90,7 @@ function ChatHome({user, selectedFriend, users}) {
               const sending = message.uid === user.uid
               const lastMessage = i === messages.length - 1
               return selectedFriend === null
-              ? (allChatFilter(message) && <Message key={message.id} sender={sender} text={message.text} message={message} sending={sending} recieveTime={message.sentAt} timeStamp={message.createdAt} currDate={currDate} setDetails={setDetails}/>)
+              ? (allChatFilter(message) && <Message key={message.id} sender={sender} text={message.text} message={message} sending={sending} recieveTime={message.sentAt} timeStamp={message.createdAt} currDate={currDate} setDetails={setDetails} allChat />)
               :(checkFriendFilterMsg(selectedFriend?.uid, message)
                 && <Message key={message.id} sender={sender} text={message.text} message={message} sending={sending} recieveTime={message.sentAt} timeStamp={message.createdAt} currDate={currDate} setDetails={setDetails}/>)
             })}

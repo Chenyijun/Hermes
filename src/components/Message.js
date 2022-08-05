@@ -4,7 +4,7 @@ import moment from 'moment'
 import Avatar from "./Avatar";
 import InsertCommentIcon from '@mui/icons-material/InsertComment';
 
-const Message = ({ sender, text, sending, message, recieveTime, timeStamp, currDate, setDetails }) => {
+const Message = ({ sender, text, sending, message, recieveTime, timeStamp, currDate, setDetails, allChat }) => {
   const sentTime = moment(timeStamp.toDate()).format('M/D/YY h:mma')
   const recieveAt = moment(recieveTime.toDate()).format('M/D/YY h:mma')
   const haveSent = () => {
@@ -13,8 +13,9 @@ const Message = ({ sender, text, sending, message, recieveTime, timeStamp, currD
   const messageDetails = {id: message.id, sender: sender, text: text, sentTime: sentTime, recieved: recieveAt, nestedMessage: message.nestedMessage, haveSent: haveSent()}
 
   return (
+    <>
     <MessageWrapper key={message && message.id}>
-      <Avatar user={sender} />
+      <Avatar user={sender} data-tip={sender?.firstName} all={allChat}/>
       <MessageTextWrapper sending={sending}>
         {text}
       </MessageTextWrapper>
@@ -26,6 +27,7 @@ const Message = ({ sender, text, sending, message, recieveTime, timeStamp, currD
         {message?.nestedMessage?.length > 0 && <NotificationBubble/>}
       </CommentButtonWrapper>
     </MessageWrapper>
+    </>
   );
 };
 
