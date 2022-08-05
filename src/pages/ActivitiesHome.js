@@ -39,7 +39,7 @@ function ActivitiesHome({user, selectedFriend}) {
   useEffect(() => {
     // setOpenModal(selectedFriend && (sparkBoxes && sparkBoxes[0].sent === false) ? true : false)
     //allow everyone to get boxes since technically boxes are per set of
-    setOpenModal((selectedFriend && user.box) ? true : false)
+    setOpenModal((selectedFriend && user.box && (sparkBoxes && sparkBoxes[0].seenBy?.includes(user.uid))) ? true : false)
   }, [user]);
 
   useEffect(() => {
@@ -57,8 +57,10 @@ function ActivitiesHome({user, selectedFriend}) {
 
   const handleModalClose = async (box) => {
     console.log('modal close')
+    const seenBy = box.seenBy.push(user.uid)
     await updateDoc(doc(db, "boxes", box.id), {
-      sent: true
+      sent: true,
+      seenBy: seenBy
     });
     await updateDoc(doc(db, "users", user.uid), {
       box: false
