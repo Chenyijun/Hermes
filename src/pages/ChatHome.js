@@ -52,7 +52,7 @@ function ChatHome({user, selectedFriend, users}) {
           id: docId,
           text: formValue,
           createdAt: Timestamp.now(),
-          sentAt: new Timestamp(Timestamp.now().seconds + 600, Timestamp.now().nanoseconds),
+          sentAt: new Timestamp(Timestamp.now().seconds + 300, Timestamp.now().nanoseconds),
           uid,
           recipientUid: selectedFriend?.uid || null,
           nestedMessage: []
