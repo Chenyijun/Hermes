@@ -53,7 +53,7 @@ function Home({props}) {
 				}
 			});
 		})
-	},[user])
+	},[])
 
   useEffect( () => {
     user && (myFriends?.length > 0 ? setSelectedFriend(myFriendsList[0]) : setSelectedFriend(user))
