@@ -99,14 +99,13 @@ const UserModal = ({openModal, setOpenModal, allUsers, user, myFriendsList}) => 
 	>
 		<Box sx={{
 				background: 'white',
-				transform: 'translate(75%, 30%)',
-				width: '400px',
-				height: '400px',
+				transform: 'translate(100%, 100%)',
+				width: '225px',
 				padding: '1rem',
       }}>
 				{allUsers?.length === 0 ?
 					<p>All the users on the platform is already your friend! Invite your friends to join Spark!</p>	
-					: <FormControl sx={{ m: 1, minWidth: 80 }}>
+					: <FormControl sx={{ m: 1, minWidth: 200 }}>
 						<InputLabel id="demo-simple-select-label">Add Friend</InputLabel>
 						<Select
 							labelId="demo-simple-select-label"

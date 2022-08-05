@@ -87,7 +87,7 @@ function ChatHome({user, selectedFriend, users}) {
     <>
     {showDetails ? <DetailedMessage message={detailedMessage} setShowDetails={setShowDetails} user={user}/> : <>
         <ChatWrapper>
-          <ChatMessageWrappers>
+          <ChatMessageWrappers all={selectedFriend === null}>
             {user && messages && messages.map((message, i) => {
               const sender = message && users && users.find(user => {
                 return user.uid === message.uid
